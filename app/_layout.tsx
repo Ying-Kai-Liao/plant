@@ -48,7 +48,7 @@ function RootLayoutNav() {
 
   return (
     <SplashComponent>
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
@@ -57,3 +57,4 @@ function RootLayoutNav() {
     </SplashComponent>
   );
 }
+//bg r242 g241 b248
