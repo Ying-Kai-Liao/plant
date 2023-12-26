@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "plant",
-    "slug": "plant",
+    "name": "plant-joy",
+    "slug": "plant-joy",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "plantjoy",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",

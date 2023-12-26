@@ -81,7 +81,7 @@ export default function TabLayout() {
           headerShown: true,
           tabBarIcon: createTabIcon(HomeIcon_s, HomeIcon),
           headerRight: () => (
-            <Link href="/modal" asChild>
+            <Link href="/test" asChild>
               <Pressable>
                 {({ pressed }) => (
                   <FontAwesome

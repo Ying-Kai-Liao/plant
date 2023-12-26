@@ -7,12 +7,12 @@ import StartButton from '../../components/ui/StartButton';
 
 import field_bg from '../../assets/images/field_selection_bg.png'
 
-export default function TabTwoScreen() {
+export default function FieldSelection() {
   return (
     <ImageBackground source={field_bg} style={styles.container}>
       <Text style={styles.title}>！尋找小夥伴！</Text>
       <Text style={styles.context}>你的場域需要誰來陪伴呢？</Text>
-      <StartButton onPress={() => {}}/>
+      <StartButton/>
     </ImageBackground>
   );
 }

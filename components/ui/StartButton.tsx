@@ -6,19 +6,22 @@ import {
   StyleProp,
   ViewStyle,
 } from "react-native";
+import { Link } from "expo-router";
 import { View } from "../Themed";
 
 interface StartButtonProps {
-  onPress: () => void;
+  onPress?: () => void;
   style?: StyleProp<ViewStyle>;
 }
 
 const StartButton = ({ onPress, style }: StartButtonProps) => {
   return (
     <View style={styles.outerBorder}>
-      <TouchableOpacity onPress={onPress} style={styles.button}>
-        <Text style={styles.text}>START</Text>
-      </TouchableOpacity>
+      <Link href="/field" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.text}>START</Text>
+        </TouchableOpacity>
+      </Link>
     </View>
   );
 };
