@@ -18,7 +18,7 @@ interface CarouselItemProps {
   index: number;
 }
 
-interface renderDot {
+interface DotProp {
   active: boolean, 
   index: number;
 }
@@ -33,11 +33,10 @@ const CarouselItem: React.FC<CarouselItemProps> = ({ item }) => {
   );
 };
 
-const DotProp = ({ active, index }: renderDot) => {
+const renderDot = ({ active, index }: DotProp) => {
   return (
-    <View >
+    <View style={{width: 20, }}>
 
-      {/* custom dot*/}
     </View>
   )
 }
