@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_圖層_1" data-name="圖層 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 149.46 155.85">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #727171;
+      }
+    </style>
+  </defs>
+  <rect class="cls-2" x="42.76" y="64.21" width="65.83" height="27.43" rx="13.71" ry="13.71"/>
+  <circle class="cls-2" cx="56.35" cy="77.92" r="19.2"/>
+  <circle class="cls-1" cx="56.35" cy="77.92" r="15.36"/>
+</svg>

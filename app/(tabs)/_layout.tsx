@@ -78,10 +78,10 @@ export default function TabLayout() {
         options={{
           title: "主頁",
           tabBarAccessibilityLabel: '主頁',
-          headerShown: true,
+          // headerShown: true,
           tabBarIcon: createTabIcon(HomeIcon_s, HomeIcon),
           headerRight: () => (
-            <Link href="/test" asChild>
+            <Link href="/modal" asChild>
               <Pressable>
                 {({ pressed }) => (
                   <FontAwesome

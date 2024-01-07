@@ -12,16 +12,14 @@ import { View } from "../Themed";
 interface SelectionButtonProps {
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
-  label?: string
+  label?: string;
 }
 
-const SelectionButton = ({ onPress, style, label }: SelectionButtonProps) => {
+const SelectionButton = ({ style, label }: SelectionButtonProps) => {
   return (
-      <Link href="/field" asChild>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.text}>{label}</Text>
-        </TouchableOpacity>
-      </Link>
+    <View style={styles.container}>
+      <Text style={styles.text}>{label}</Text>
+    </View>
   );
 };
 
@@ -35,12 +33,11 @@ const styles = StyleSheet.create({
 
     // Shadow effect here if you need it
   },
-  button: {
+  container: {
     backgroundColor: "#fff", // Use the appropriate background color
     paddingHorizontal: 28, // Horizontal padding
-    paddingVertical: 10, // Vertical padding
-    borderRadius: 10, // Adjust the border radius to match your design
-    borderWidth: 1, // Set border width
+    paddingVertical: 20, // Vertical padding
+    borderRadius: 18, // Adjust the border radius to match your design
     borderColor: "#ddd", // Set border color
     alignItems: "center", // Center the text inside the button
     justifyContent: "center", // Center the text inside the button

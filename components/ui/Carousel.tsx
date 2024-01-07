@@ -1,5 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions, Image, ImageSourcePropType } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Image,
+  ImageSourcePropType,
+  TouchableOpacity,
+} from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 
 import classroom_png from "../../assets/images/field_scene/classroom.png";
@@ -19,37 +27,37 @@ interface CarouselItemProps {
 }
 
 interface DotProp {
-  active: boolean, 
+  active: boolean;
   index: number;
 }
 
-const { width: viewportWidth } = Dimensions.get("window");
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get("window");
 
 const CarouselItem: React.FC<CarouselItemProps> = ({ item }) => {
   return (
     <View style={styles.item}>
-      <Image source={item.src} resizeMode="contain" style={{ width: 260, height: 260 }}/>
+      <Image
+        source={item.src}
+        resizeMode="contain"
+        style={{ width: 260, height: 260 }}
+      />
     </View>
   );
 };
 
-const renderDot = ({ active, index }: DotProp) => {
-  return (
-    <View style={{width: 20, }}>
-
-    </View>
-  )
-}
-
-const carouselItems: CarouselDataItem[] = [
-  { title: "classroom", src: classroom_png },
-  { title: "bedroom", src: bedroom_png },
-  { title: "livingroom", src: livingroom_png },
-  { title: "office", src: office_png },
-  { title: "restaurant", src: restaurant_png },
+export const carouselItems: CarouselDataItem[] = [
+  { title: "客廳", src: livingroom_png },
+  { title: "臥室", src: bedroom_png },
+  { title: "教室", src: classroom_png },
+  { title: "餐廳", src: restaurant_png },
+  { title: "辦公室", src: office_png },
 ];
 
-const CustomCarousel: React.FC = () => {
+interface CustomCarouselProps {
+  onSlideChange?: (location: string, index: number) => void;
+}
+
+const CustomCarousel: React.FC<CustomCarouselProps> = React.memo(({ onSlideChange }) => {
   const [activeSlide, setActiveSlide] = React.useState(0);
   const renderCarouselItem = ({
     item,
@@ -65,26 +73,50 @@ const CustomCarousel: React.FC = () => {
         data={carouselItems}
         renderItem={renderCarouselItem}
         sliderWidth={viewportWidth}
-        itemWidth={viewportWidth * 0.75}
-        onSnapToItem={(index) => setActiveSlide(index)}
+        itemWidth={260}
+        onSnapToItem={(index) => {
+          setActiveSlide(index);
+          // passing selected location to parent
+          if (onSlideChange) {
+            onSlideChange(carouselItems[index].title, index);
+          }
+        }}
         vertical={undefined}
+        inactiveSlideScale={0.8}
       />
+      <Text style={styles.title}>{carouselItems[activeSlide].title}</Text>
       <Pagination
         dotsLength={carouselItems.length}
         activeDotIndex={activeSlide}
+        containerStyle={{
+          backgroundColor: "rgba(0, 0, 0, 0)",
+          top: 330,
+          position: "absolute",
+        }}
+        dotStyle={{
+          width: 23,
+          height: 8,
+          borderRadius: 5,
+          marginHorizontal: -15,
+          zIndex: 10,
+        }}
         dotColor="#a4b5d2"
+        inactiveDotStyle={{
+          borderWidth: 0,
+          zIndex: 0,
+        }}
         inactiveDotColor="#e1e2e2"
+        inactiveDotScale={1}
+        inactiveDotOpacity={1}
       />
-      <Text>{carouselItems[activeSlide].title}</Text>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   item: {
-    width: 260,
     height: 260,
-    backgroundColor: "#fefefe",
+    backgroundColor: "#fefefe", //可以省略
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
@@ -93,21 +125,25 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 22,
     elevation: 5, // Elevation for Android (applies uniform shadow)
-    marginTop: 50,
-    marginLeft: 20,
+    marginTop: 40,
   },
   title: {
-    // Style for the title or content within the carousel item
+    fontSize: 15,
+    fontWeight: "600",
+    position: "absolute",
+    top: 330,
+    backgroundColor: "rgba(0, 0, 0, 0)",
   },
   image: {
     flex: 1,
     resizeMode: "contain",
   },
   container: {
-    flex: 0.7,
+    flex: 0.73,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: -30,
   },
   panagation: {
     backgroundColor: "transparent",
