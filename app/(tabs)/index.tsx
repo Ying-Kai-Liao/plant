@@ -23,7 +23,6 @@ import homeBg from "../../assets/images/home/home_bg.png";
 import detailBg from "../../assets/images/home/detail_bg.png";
 import addImage from "../../assets/images/home/add.png";
 // import lottie from "../../assets/lotties/characters/1/joy.json";
-import { LottieUri } from "./LottieUri";
 
 // Character 1
 import joy1 from "../../assets/lotties/characters/1/joy.json";
