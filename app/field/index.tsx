@@ -2,20 +2,21 @@ import { useEffect, useMemo, useState } from "react";
 import { StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import { ImageBackground, Image } from "react-native";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { Link } from "expo-router";
 import axios from "axios";
+import Lottie from "lottie-react-native";
 
 import { Text, View } from "../../components/Themed";
 import CustomCarousel, { carouselItems } from "../../components/ui/Carousel";
 import SelectionButton from "../../components/ui/SelectionButton";
 import SubmitButton from "../../components/ui/SubmitButton";
 import SizeButton from "../../components/ui/SizeButton";
+import StyleButton from "../../components/ui/StyleButton";
 
+import ImageUri from "../../constants/ImageUri";
 import BackIcon from "../../assets/images/icon/back.svg";
 import field_bg from "../../assets/images/field_selection_bg.png";
 import sizePlantLarge from "../../assets/images/field_items/plant_large.png";
-import ImageUri from "../../constants/ImageUri";
-import { Link } from "expo-router";
-import StyleButton from "../../components/ui/StyleButton";
 
 const { width: viewportWidth, height: viewportHeight } =
   Dimensions.get("window");
@@ -92,6 +93,12 @@ export default function TabTwoScreen() {
   const time = watch("time");
   const style = watch("style");
 
+  const queryString = `style=${encodeURIComponent(
+    style
+  )}&location=${encodeURIComponent(location)}&time=${encodeURIComponent(
+    time
+  )}&size=${encodeURIComponent(size)}`;
+
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
       shouldDirty: true,
@@ -155,6 +162,9 @@ export default function TabTwoScreen() {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    if (step == STEPS.SIZE && location == "") {
+      setCustomValue("location", 'livingroom');
+    }
     if (step !== STEPS.STYLE) {
       return onNext();
     }
@@ -470,8 +480,9 @@ export default function TabTwoScreen() {
               <SubmitButton
                 label="送出"
                 style={styles.submitButton2}
-                onPress={handleSubmit(onSubmit)}
+                // onPress={handleSubmit(onSubmit)}
                 disable={isLoading}
+                query={queryString}
               />
             </View>
           </>

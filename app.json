@@ -17,12 +17,16 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "plant"
+      "bundleIdentifier": "plant",
+      "runtimeVersion": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "runtimeVersion": {
+        "policy": "appVersion"
       }
     },
     "web": {
@@ -44,6 +48,9 @@
         "projectId": "0fe4394f-6430-4ddb-aba0-5f80d0201cff"
       }
     },
-    "owner": "ykl0919"
+    "owner": "ykl0919",
+    "updates": {
+      "url": "https://u.expo.dev/0fe4394f-6430-4ddb-aba0-5f80d0201cff"
+    }
   }
 }

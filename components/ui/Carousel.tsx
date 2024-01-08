@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
+import Lottie, { AnimationObject } from "lottie-react-native";
 
 import classroom_png from "../../assets/images/field_scene/classroom.png";
 import bedroom_png from "../../assets/images/field_scene/bedroom.png";
@@ -16,9 +17,18 @@ import livingroom_png from "../../assets/images/field_scene/livingroom.png";
 import office_png from "../../assets/images/field_scene/office.png";
 import restaurant_png from "../../assets/images/field_scene/restaurant.png";
 
+import classroomLottie from "../../assets/lotties/scene/classroom.json";
+import livingroomLottie from "../../assets/lotties/scene/livingroom.json";
+import bedroomLottie from "../../assets/lotties/scene/bedroom.json";
+import officeLottie from "../../assets/lotties/scene/office.json";
+import restaurantLottie from "../../assets/lotties/scene/restaurant.json";
+
 interface CarouselDataItem {
   title: string;
+  name: string;
   src: ImageSourcePropType;
+  lottieSrc: AnimationObject;
+  large?: boolean;
 }
 
 interface CarouselItemProps {
@@ -31,87 +41,88 @@ interface DotProp {
   index: number;
 }
 
-const { width: viewportWidth, height: viewportHeight } = Dimensions.get("window");
+const { width: viewportWidth, height: viewportHeight } =
+  Dimensions.get("window");
 
 const CarouselItem: React.FC<CarouselItemProps> = ({ item }) => {
   return (
     <View style={styles.item}>
-      <Image
-        source={item.src}
-        resizeMode="contain"
-        style={{ width: 260, height: 260 }}
-      />
+      <View style={item.large? [styles.lottie, {width: 260}] : styles.lottie}>
+        <Lottie source={item.lottieSrc} autoPlay loop />
+      </View>
     </View>
   );
 };
 
 export const carouselItems: CarouselDataItem[] = [
-  { title: "客廳", src: livingroom_png },
-  { title: "臥室", src: bedroom_png },
-  { title: "教室", src: classroom_png },
-  { title: "餐廳", src: restaurant_png },
-  { title: "辦公室", src: office_png },
+  { title: "客廳",name: 'livingroom',src: livingroom_png, lottieSrc: livingroomLottie },
+  { title: "臥室",name: 'bedroom', src: bedroom_png, lottieSrc: bedroomLottie },
+  { title: "教室",name: 'classroom', src: classroom_png, lottieSrc: classroomLottie, large: true },
+  { title: "餐廳",name: 'restaurant', src: restaurant_png, lottieSrc: restaurantLottie, large: true },
+  { title: "辦公室",name: 'office', src: office_png, lottieSrc: officeLottie, large: true },
 ];
 
 interface CustomCarouselProps {
   onSlideChange?: (location: string, index: number) => void;
 }
 
-const CustomCarousel: React.FC<CustomCarouselProps> = React.memo(({ onSlideChange }) => {
-  const [activeSlide, setActiveSlide] = React.useState(0);
-  const renderCarouselItem = ({
-    item,
-    index,
-  }: {
-    item: CarouselDataItem;
-    index: number;
-  }) => <CarouselItem item={item} index={index} />;
+const CustomCarousel: React.FC<CustomCarouselProps> = React.memo(
+  ({ onSlideChange }) => {
+    const [activeSlide, setActiveSlide] = React.useState(0);
+    const renderCarouselItem = ({
+      item,
+      index,
+    }: {
+      item: CarouselDataItem;
+      index: number;
+    }) => <CarouselItem item={item} index={index} />;
 
-  return (
-    <View style={styles.container}>
-      <Carousel
-        data={carouselItems}
-        renderItem={renderCarouselItem}
-        sliderWidth={viewportWidth}
-        itemWidth={260}
-        onSnapToItem={(index) => {
-          setActiveSlide(index);
-          // passing selected location to parent
-          if (onSlideChange) {
-            onSlideChange(carouselItems[index].title, index);
-          }
-        }}
-        vertical={undefined}
-        inactiveSlideScale={0.8}
-      />
-      <Text style={styles.title}>{carouselItems[activeSlide].title}</Text>
-      <Pagination
-        dotsLength={carouselItems.length}
-        activeDotIndex={activeSlide}
-        containerStyle={{
-          backgroundColor: "rgba(0, 0, 0, 0)",
-          top: 330,
-          position: "absolute",
-        }}
-        dotStyle={{
-          width: 23,
-          height: 8,
-          borderRadius: 5,
-          marginHorizontal: -15,
-          zIndex: 10,
-        }}
-        dotColor="#a4b5d2"
-        inactiveDotStyle={{
-          borderWidth: 0,
-          zIndex: 0,
-        }}
-        inactiveDotColor="#e1e2e2"
-        inactiveDotScale={1}
-        inactiveDotOpacity={1}
-      />
-    </View>
-  );
-});
+    return (
+      <View style={styles.container}>
+        <Carousel
+          data={carouselItems}
+          renderItem={renderCarouselItem}
+          sliderWidth={viewportWidth}
+          itemWidth={260}
+          onSnapToItem={(index) => {
+            setActiveSlide(index);
+            // passing selected location to parent
+            if (onSlideChange) {
+              onSlideChange(carouselItems[index].name, index);
+            }
+          }}
+          vertical={undefined}
+          inactiveSlideScale={0.8}
+        />
+        <Text style={styles.title}>{carouselItems[activeSlide].title}</Text>
+        <Pagination
+          dotsLength={carouselItems.length}
+          activeDotIndex={activeSlide}
+          containerStyle={{
+            backgroundColor: "rgba(0, 0, 0, 0)",
+            top: 330,
+            position: "absolute",
+          }}
+          dotStyle={{
+            width: 23,
+            height: 8,
+            borderRadius: 5,
+            marginHorizontal: -15,
+            zIndex: 10,
+          }}
+          dotColor="#a4b5d2"
+          inactiveDotStyle={{
+            borderWidth: 0,
+            zIndex: 0,
+          }}
+          inactiveDotColor="#e1e2e2"
+          inactiveDotScale={1}
+          inactiveDotOpacity={1}
+        />
+      </View>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   item: {
@@ -146,6 +157,11 @@ const styles = StyleSheet.create({
     marginBottom: -30,
   },
   panagation: {
+    backgroundColor: "transparent",
+  },
+  lottie: {
+    width: viewportWidth * 1.5,
+    height: viewportWidth * 1.5,
     backgroundColor: "transparent",
   },
 });

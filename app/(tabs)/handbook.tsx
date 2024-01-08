@@ -1,16 +1,20 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from "react-native";
 
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
-import React from 'react';
-import LottieView from "lottie-react-native";
-import lottie from "../../assets/lotties/astronaut.json"
+import EditScreenInfo from "../../components/EditScreenInfo";
+import { Text, View } from "../../components/Themed";
+import React from "react";
+import Lottie from "lottie-react-native";
+import lottie from "../../assets/lotties/work.json";
+
+const { width, height } = Dimensions.get("window");
 
 export default function HandBook() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Handbook</Text>
-      {/* <LottieView source={lottie} autoPlay loop resizeMode="contain"/> */}
+      <View style={styles.lottie}>
+        <Lottie source={lottie} autoPlay loop />
+      </View>
     </View>
   );
 }
@@ -18,17 +22,24 @@ export default function HandBook() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // backgroundColor: 'rgb(0, 0, 0)'
+    backgroundColor: "white",
+    alignContent: 'center',
+    justifyContent: 'center'
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+  },
+  lottie: {
+    position: "absolute",
+    zIndex: 10,
+    top: 200,
+    width: width * 0.9,
+    height: width,
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    width: "80%",
   },
 });

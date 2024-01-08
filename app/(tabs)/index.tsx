@@ -1,11 +1,18 @@
-import { Dimensions, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Dimensions,
+  Pressable,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { ImageBackground, Image, Switch } from "react-native";
 import { useEffect, useState } from "react";
 import { Link } from "expo-router";
+import Lottie, { AnimationObject } from "lottie-react-native";
 
 import { Text, View } from "../../components/Themed";
 import PlantButton from "../../components/ui_home/PlantButton";
 
+import { ImageUriHome } from "../../constants/ImageUri";
 import BackIcon from "../../assets/images/icon/back.svg";
 import MoreIcon from "../../assets/images/home/more.svg";
 import WaterIcon from "../../assets/images/icon/water.svg";
@@ -15,7 +22,48 @@ import TimeIcon from "../../assets/images/icon/time.svg";
 import homeBg from "../../assets/images/home/home_bg.png";
 import detailBg from "../../assets/images/home/detail_bg.png";
 import addImage from "../../assets/images/home/add.png";
-import { ImageUriHome } from "../../constants/ImageUri";
+// import lottie from "../../assets/lotties/characters/1/joy.json";
+import { LottieUri } from "./LottieUri";
+
+// Character 1
+import joy1 from "../../assets/lotties/characters/1/joy.json";
+import mad1 from "../../assets/lotties/characters/1/mad.json";
+import normal1 from "../../assets/lotties/characters/1/normal.json";
+import sad1 from "../../assets/lotties/characters/1/sad.json";
+import unwater1 from "../../assets/lotties/characters/1/unwater.json";
+import watered1 from "../../assets/lotties/characters/1/watered.json";
+
+// Character 2
+import joy2 from "../../assets/lotties/characters/2/joy.json";
+import mad2 from "../../assets/lotties/characters/2/mad.json";
+import normal2 from "../../assets/lotties/characters/2/normal.json";
+import sad2 from "../../assets/lotties/characters/2/sad.json";
+import unwater2 from "../../assets/lotties/characters/2/unwater.json";
+import watered2 from "../../assets/lotties/characters/2/watered.json";
+
+// Character 3
+import joy3 from "../../assets/lotties/characters/3/joy.json";
+import mad3 from "../../assets/lotties/characters/3/mad.json";
+import normal3 from "../../assets/lotties/characters/3/normal.json";
+import sad3 from "../../assets/lotties/characters/3/sad.json";
+import unwater3 from "../../assets/lotties/characters/3/unwater.json";
+import watered3 from "../../assets/lotties/characters/3/watered.json";
+
+// Character 4
+import joy4 from "../../assets/lotties/characters/4/joy.json";
+import mad4 from "../../assets/lotties/characters/4/mad.json";
+import normal4 from "../../assets/lotties/characters/4/normal.json";
+import sad4 from "../../assets/lotties/characters/4/sad.json";
+import unwater4 from "../../assets/lotties/characters/4/unwater.json";
+import watered4 from "../../assets/lotties/characters/4/watered.json";
+
+// Character 5
+import joy5 from "../../assets/lotties/characters/5/joy.json";
+import mad5 from "../../assets/lotties/characters/5/mad.json";
+import normal5 from "../../assets/lotties/characters/5/normal.json";
+import sad5 from "../../assets/lotties/characters/5/sad.json";
+import unwater5 from "../../assets/lotties/characters/5/unwater.json";
+import watered5 from "../../assets/lotties/characters/5/watered.json";
 
 const { width: viewportWidth, height: viewportHeight } =
   Dimensions.get("window");
@@ -26,6 +74,19 @@ type PlantData = {
   name: string;
 };
 
+type LottieAnimation = {
+  [key: string]: any; // A generic object to represent the Lottie JSON
+};
+
+type LottieExpressions = {
+  joy: LottieAnimation;
+  mad: LottieAnimation;
+  normal: LottieAnimation;
+  sad: LottieAnimation;
+  unwater: LottieAnimation;
+  watered: LottieAnimation;
+};
+
 export default function Home() {
   const [openMyPlant, setOpenMyPlant] = useState(false);
   const [detailData, setDetailData] = useState<PlantData>(); // detail page data
@@ -33,6 +94,100 @@ export default function Home() {
   const [tool, setTool] = useState(false);
   const [data, setData] = useState<PlantData[]>([]); // data format still need modify
   const [isEnabled, setIsEnabled] = useState(false);
+  const [character, setCharacter] = useState(0);
+  const [currentExpression, setCurrentExpression] = useState("");
+  const [trigger, setTrigger] = useState(false);
+  const [lottie, setLottie] = useState<LottieAnimation>();
+  const [lotties, setLotties] = useState<LottieExpressions>();
+
+  function getCharacterLotties(characterId: number): LottieExpressions {
+    switch (characterId) {
+      case 1:
+        return {
+          joy: joy1,
+          mad: mad1,
+          normal: normal1,
+          sad: sad1,
+          unwater: unwater1,
+          watered: watered1,
+        };
+      case 2:
+        return {
+          joy: joy2,
+          mad: mad2,
+          normal: normal2,
+          sad: sad2,
+          unwater: unwater2,
+          watered: watered2,
+        };
+      case 3:
+        return {
+          joy: joy3,
+          mad: mad3,
+          normal: normal3,
+          sad: sad3,
+          unwater: unwater3,
+          watered: watered3,
+        };
+      case 4:
+        return {
+          joy: joy4,
+          mad: mad4,
+          normal: normal4,
+          sad: sad4,
+          unwater: unwater4,
+          watered: watered4,
+        };
+      case 5:
+        return {
+          joy: joy5,
+          mad: mad5,
+          normal: normal5,
+          sad: sad5,
+          unwater: unwater5,
+          watered: watered5,
+        };
+      default:
+        return {
+          joy: joy1,
+          mad: mad1,
+          normal: normal1,
+          sad: sad1,
+          unwater: unwater1,
+          watered: watered1,
+        }; // or some default set of animations
+    }
+  }
+
+  const getRandomExpression = (): string | undefined => {
+    if (lotties) {
+      const excludedKeys: (keyof LottieExpressions)[] = [
+        "watered",
+        "unwater",
+        "normal",
+        currentExpression as keyof LottieExpressions,
+      ];
+      const filteredKeys = Object.keys(lotties).filter(
+        (key) => !excludedKeys.includes(key as keyof LottieExpressions)
+      ) as Array<keyof LottieExpressions>;
+
+      if (filteredKeys.length === 0) {
+        return "normal"; // or some default animation if you prefer
+      }
+
+      const randomKey =
+        filteredKeys[Math.floor(Math.random() * filteredKeys.length)];
+      return randomKey;
+    }
+  };
+
+  const handleAnimationFinish = () => {
+    if (currentExpression !== "normal" && !trigger) {
+      setLottie(lotties?.normal);
+      setCurrentExpression("normal");
+    }
+  };
+
   // useEffect(() => {
   //   // prefetch images
   //   const imagesToPrefetch = Object.values(ImageUriHome);
@@ -49,7 +204,19 @@ export default function Home() {
       { type: 4, date: "2023/11/03", name: "欣欣" },
       { type: 3, date: "2023/11/04", name: "欣欣" },
     ]);
+
+    setCharacter(3);
   }, []);
+
+  useEffect(() => {
+    const characterLotties = getCharacterLotties(character);
+    setLotties(characterLotties);
+  }, [character]);
+
+  useEffect(() => {
+    setCurrentExpression("normal");
+    setLottie(lotties?.normal);
+  }, [lotties]);
 
   if (openMyPlant) {
     return (
@@ -260,7 +427,7 @@ export default function Home() {
                 width: 120,
                 height: 120,
                 right: viewportWidth * 0.01,
-                bottom: viewportHeight * 0.03
+                bottom: viewportHeight * 0.03,
               }}
             />
           </View>
@@ -287,6 +454,38 @@ export default function Home() {
         }}
         style={styles.start_button}
       />
+      <Pressable
+        onPress={() => {
+          if (!(currentExpression === ("normal" || "watered" || "unwater"))) {
+            setTrigger(true);
+          }
+          const random = getRandomExpression() as keyof LottieExpressions;
+          if (lotties) {
+            setLottie(lotties[random]);
+            setCurrentExpression(random);
+          }
+          console.log(random);
+        }}
+        style={styles.lottie}
+      >
+        {currentExpression === ("normal" || "watered" || "unwater") ? (
+          <>
+            <Lottie
+              source={lottie as AnimationObject}
+              autoPlay
+              loop={currentExpression === ("normal" || "watered" || "unwater")}
+            />
+            {/* <Text>loop</Text> */}
+          </>
+        ) : (
+          <Lottie
+            source={lottie as AnimationObject}
+            autoPlay
+            loop={false}
+            onAnimationFinish={trigger? ()=>setTrigger(false) : handleAnimationFinish}
+          />
+        )}
+      </Pressable>
     </ImageBackground>
   );
 }
@@ -422,5 +621,13 @@ const styles = StyleSheet.create({
     alignItems: "center", // Vertically center
     backgroundColor: "transparent", // No background color
     zIndex: 10, // Ensure it's above other components
+  },
+  lottie: {
+    position: "absolute",
+    zIndex: 1000,
+    top: 200,
+    width: viewportWidth * 0.9,
+    height: viewportWidth,
+    backgroundColor: "transparent",
   },
 });
