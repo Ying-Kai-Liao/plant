@@ -1,5 +1,6 @@
 import {
   Dimensions,
+  Modal,
   Pressable,
   StyleSheet,
   TouchableOpacity,
@@ -11,6 +12,7 @@ import Lottie, { AnimationObject } from "lottie-react-native";
 
 import { Text, View } from "../../components/Themed";
 import PlantButton from "../../components/ui_home/PlantButton";
+import CustomCarousel from "../../components/ui/CharacterCarousel";
 
 import { ImageUriHome } from "../../constants/ImageUri";
 import BackIcon from "../../assets/images/icon/back.svg";
@@ -87,6 +89,7 @@ type LottieExpressions = {
 };
 
 export default function Home() {
+  const [chooseCharacter, setChooseCharacter] = useState(true);
   const [openMyPlant, setOpenMyPlant] = useState(false);
   const [detailData, setDetailData] = useState<PlantData>(); // detail page data
   const [detailView, setDetailView] = useState(false); // detail page open
@@ -99,6 +102,11 @@ export default function Home() {
   const [lottie, setLottie] = useState<LottieAnimation>();
   const [lotties, setLotties] = useState<LottieExpressions>();
 
+  const onSlideChange = (location: string, index: number) => {
+    console.log(index)
+    setCharacter(index+1);
+  };
+
   function getCharacterLotties(characterId: number): LottieExpressions {
     switch (characterId) {
       case 1:
@@ -110,7 +118,7 @@ export default function Home() {
           unwater: unwater1,
           watered: watered1,
         };
-      case 2:
+      case 5:
         return {
           joy: joy2,
           mad: mad2,
@@ -119,7 +127,7 @@ export default function Home() {
           unwater: unwater2,
           watered: watered2,
         };
-      case 3:
+      case 2:
         return {
           joy: joy3,
           mad: mad3,
@@ -128,7 +136,7 @@ export default function Home() {
           unwater: unwater3,
           watered: watered3,
         };
-      case 4:
+      case 3:
         return {
           joy: joy4,
           mad: mad4,
@@ -137,7 +145,7 @@ export default function Home() {
           unwater: unwater4,
           watered: watered4,
         };
-      case 5:
+      case 4:
         return {
           joy: joy5,
           mad: mad5,
@@ -447,11 +455,42 @@ export default function Home() {
   }
   return (
     <ImageBackground source={homeBg} style={styles.container_outer}>
+      <Modal animationType="fade" visible={chooseCharacter}>
+        <View style={styles.deletemodalContainer}>
+          <View
+            style={{
+              paddingHorizontal: 40,
+              paddingVertical: 8,
+              borderRadius: 20,
+              marginTop: viewportHeight * 0.1,
+            }}
+          >
+            <Text style={{ fontSize: 18 }}>選擇你專屬的小精靈</Text>
+          </View>
+          <CustomCarousel onSlideChange={onSlideChange} />
+
+          <View style={styles.modalView}>
+            <Pressable
+              onPress={() => {
+                setChooseCharacter(!chooseCharacter);
+              }}
+            >
+              <Text style={{ fontSize: 18, fontWeight: "600" }}>就是你了!</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <PlantButton
         onPress={() => {
           setOpenMyPlant(!openMyPlant);
         }}
         style={styles.start_button}
+      />
+      <PlantButton
+        onPress={() => {
+          setChooseCharacter(!chooseCharacter);
+        }}
+        style={styles.start_button2}
       />
       <Pressable
         onPress={() => {
@@ -481,7 +520,9 @@ export default function Home() {
             source={lottie as AnimationObject}
             autoPlay
             loop={false}
-            onAnimationFinish={trigger? ()=>setTrigger(false) : handleAnimationFinish}
+            onAnimationFinish={
+              trigger ? () => setTrigger(false) : handleAnimationFinish
+            }
           />
         )}
       </Pressable>
@@ -613,6 +654,11 @@ const styles = StyleSheet.create({
     right: 50,
     bottom: 200,
   },
+  start_button2: {
+    position: "absolute",
+    right: 50,
+    bottom: 150,
+  },
   backButton: {
     position: "absolute",
     top: 80, // Distance from the top, adjust according to your status bar/Notch
@@ -628,5 +674,36 @@ const styles = StyleSheet.create({
     width: viewportWidth * 0.9,
     height: viewportWidth,
     backgroundColor: "transparent",
+  },
+  deletemodalContainer: {
+    flex: 1,
+    backgroundColor: "rgba(242, 241, 248, 1)",
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  modalView: {
+    position: "absolute",
+    bottom: 100,
+    zIndex: 20,
+    paddingHorizontal: 22,
+    paddingVertical: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 35,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 2, // Shadow to the left
+      height: 3, // Shadow to the bottom
+    },
+    shadowOpacity: 0.2, // Opacity of shadow
+    shadowRadius: 4, // Radius of shadow
+    elevation: 5, // Elevation for Android (applies uniform shadow)
+  },
+  modalTitle: {
+    paddingHorizontal: 40,
+    paddingVertical: 35,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 35,
   },
 });
