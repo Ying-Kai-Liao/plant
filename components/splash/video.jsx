@@ -24,18 +24,14 @@ export default function SplashComponent({ children }) {
   }
   return (
     <>
-      {status.didJustFinish ? (
-        <>{children}</>
-      ) : (
-        <Video
-          ref={video}
-          style={StyleSheet.absoluteFill}
-          source={videoSrc}
-          shouldPlay
-          resizeMode={ResizeMode.CONTAIN}
-          onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-        />
-      )}
+      <Video
+        ref={video}
+        style={StyleSheet.absoluteFill}
+        source={videoSrc}
+        shouldPlay
+        resizeMode={ResizeMode.CONTAIN}
+        onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+      />
     </>
   );
 }

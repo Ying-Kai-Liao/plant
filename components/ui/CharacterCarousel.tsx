@@ -80,13 +80,19 @@ export const carouselItems: CarouselDataItem[] = [
     name: "蘆薈",
     src: bedroom_png,
     lottieSrc: normal3,
+    content1: "幫助你在種植室內植物時提升趣味 \n帶來朝氣和有精神的氛圍",
+    content2:
+      "活力源源不絕的你\n擁有頑強的生命力\n讓你的室內空間充滿活力",
   },
   {
     title: "活力小精靈",
     name: "龍血樹 ",
     src: classroom_png,
-    lottieSrc: normal4,
+    lottieSrc: normal2,
     large: true,
+    content1: "姿態優雅富有時尚感 \n獨特大方的造型為室內空間增添美感",
+    content2:
+      "擁有自己獨特創意的你\n生命力頑強且長壽，造型特別\n且富有提升運氣的含意",
   },
   {
     title: "療癒小精靈",
@@ -94,6 +100,9 @@ export const carouselItems: CarouselDataItem[] = [
     src: restaurant_png,
     lottieSrc: normal5,
     large: true,
+    content1: "具有引領潮流的吸引力 \n讓空間更加活潑和充滿熱帶氣息",
+    content2:
+      "室內植物愛好者必備\n圓潤又討喜的造型療癒你的每一天\n生命力強，新手也能輕鬆上手",
   },
   {
     title: "幸運小精靈",
@@ -101,6 +110,9 @@ export const carouselItems: CarouselDataItem[] = [
     src: office_png,
     lottieSrc: normal2,
     large: true,
+    content1: "一年四季都保持活力的生機 \n提升風水的秘密武器",
+    content2:
+      "想要擁有好運氣的你\n在風水學上能帶來吉祥與富貴\n有節節高升的寓意",
   },
 ];
 

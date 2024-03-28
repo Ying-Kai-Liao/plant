@@ -18,7 +18,7 @@ import office_png from "../../assets/images/field_scene/office.png";
 import restaurant_png from "../../assets/images/field_scene/restaurant.png";
 
 import classroomLottie from "../../assets/lotties/scene/classroom.json";
-import livingroomLottie from "../../assets/lotties/scene/livingroom.json";
+import livingroomLottie from "../../assets/lotties/scene/場域動畫客廳.json";
 import bedroomLottie from "../../assets/lotties/scene/bedroom.json";
 import officeLottie from "../../assets/lotties/scene/office.json";
 import restaurantLottie from "../../assets/lotties/scene/restaurant.json";
@@ -55,7 +55,7 @@ const CarouselItem: React.FC<CarouselItemProps> = ({ item }) => {
 };
 
 export const carouselItems: CarouselDataItem[] = [
-  { title: "客廳",name: 'livingroom',src: livingroom_png, lottieSrc: livingroomLottie },
+  // { title: "客廳",name: 'livingroom',src: livingroom_png, lottieSrc: livingroomLottie },
   { title: "臥室",name: 'bedroom', src: bedroom_png, lottieSrc: bedroomLottie },
   { title: "教室",name: 'classroom', src: classroom_png, lottieSrc: classroomLottie, large: true },
   { title: "餐廳",name: 'restaurant', src: restaurant_png, lottieSrc: restaurantLottie, large: true },

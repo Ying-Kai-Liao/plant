@@ -54,7 +54,7 @@ export default function TabLayout() {
         tabBarLabelStyle: {
           display: 'none', // Space between icon and label
         },
-        headerShown: false,
+        headerShown: true,
       }}
     >
       <Tabs.Screen

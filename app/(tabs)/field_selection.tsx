@@ -29,7 +29,7 @@ export default function FieldSelection() {
         <Lottie source={normal3} autoPlay loop/>
       </View>
       <View style={{position: 'absolute', width: 150, height: 150, bottom: 230, right: 20}}>
-        <Lottie source={normal4} autoPlay loop/>
+        <Lottie source={normal2} autoPlay loop/>
       </View>
       <Text style={styles.title}>！尋找小夥伴！</Text>
       <Text style={styles.context}>你的場域需要誰來陪伴呢？</Text>

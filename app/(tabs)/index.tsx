@@ -1,5 +1,6 @@
 import {
   Dimensions,
+  ImageSourcePropType,
   Modal,
   Pressable,
   StyleSheet,
@@ -7,14 +8,12 @@ import {
 } from "react-native";
 import { ImageBackground, Image, Switch } from "react-native";
 import { useEffect, useState } from "react";
-import { Link } from "expo-router";
 import Lottie, { AnimationObject } from "lottie-react-native";
 
 import { Text, View } from "../../components/Themed";
 import PlantButton from "../../components/ui_home/PlantButton";
 import CustomCarousel from "../../components/ui/CharacterCarousel";
 
-import { ImageUriHome } from "../../constants/ImageUri";
 import BackIcon from "../../assets/images/icon/back.svg";
 import MoreIcon from "../../assets/images/home/more.svg";
 import WaterIcon from "../../assets/images/icon/water.svg";
@@ -25,6 +24,8 @@ import homeBg from "../../assets/images/home/home_bg.png";
 import detailBg from "../../assets/images/home/detail_bg.png";
 import addImage from "../../assets/images/home/add.png";
 // import lottie from "../../assets/lotties/characters/1/joy.json";
+
+import { plantImage, plantType } from "../../constants/ImageUri";
 
 // Character 1
 import joy1 from "../../assets/lotties/characters/1/joy.json";
@@ -89,12 +90,12 @@ type LottieExpressions = {
 };
 
 export default function Home() {
-  const [chooseCharacter, setChooseCharacter] = useState(true);
+  const [chooseCharacter, setChooseCharacter] = useState<boolean>();
   const [openMyPlant, setOpenMyPlant] = useState(false);
-  const [detailData, setDetailData] = useState<PlantData>(); // detail page data
+  const [detailData, setDetailData] = useState<Plant>(); // detail page data
   const [detailView, setDetailView] = useState(false); // detail page open
   const [tool, setTool] = useState(false);
-  const [data, setData] = useState<PlantData[]>([]); // data format still need modify
+  const [data, setData] = useState<Plant[]>([]); // data format still need modify
   const [isEnabled, setIsEnabled] = useState(false);
   const [character, setCharacter] = useState(0);
   const [currentExpression, setCurrentExpression] = useState("");
@@ -140,7 +141,7 @@ export default function Home() {
         return {
           joy: joy4,
           mad: mad4,
-          normal: normal4,
+          normal: normal5,
           sad: sad4,
           unwater: unwater4,
           watered: watered4,
@@ -207,12 +208,12 @@ export default function Home() {
     // get user data
 
     setData([
-      { type: 1, date: "2023/11/02", name: "欣欣" },
-      { type: 4, date: "2023/11/03", name: "欣欣" },
-      { type: 3, date: "2023/11/04", name: "欣欣" },
+      { type: 1, date: "2023/11/02", name: "欣欣", isWater: true, isFertilize: true },
+      { type: 4, date: "2023/11/03", name: "綠綠", isWater: false, isFertilize: true  },
+      { type: 3, date: "2023/11/04", name: "花花", isWater: true, isFertilize: false  },
     ]);
 
-    setCharacter(3);
+    setChooseCharacter(true);
   }, []);
 
   useEffect(() => {
@@ -224,6 +225,10 @@ export default function Home() {
     setCurrentExpression("normal");
     setLottie(lotties?.normal);
   }, [lotties]);
+
+  useEffect(() => {
+    console.log(`Modal visibility changed: ${chooseCharacter}`);
+  }, [chooseCharacter]);
 
   if (openMyPlant) {
     return (
@@ -261,7 +266,7 @@ export default function Home() {
                   left: viewportWidth * 0.05 + 45,
                 }}
               >
-                心業蔓綠絨
+                {plantType[detailData.type as keyof typeof plantType] as string}
               </Text>
               <Switch
                 trackColor={{ false: "#727171", true: "#81b0ff" }}
@@ -278,11 +283,7 @@ export default function Home() {
                 }}
               />
               <Image
-                source={{
-                  uri: ImageUriHome[
-                    detailData.type as keyof typeof ImageUriHome
-                  ],
-                }}
+                source={plantImage[detailData.type as keyof typeof plantImage] as unknown as ImageSourcePropType}
                 resizeMode="contain"
                 style={{
                   width: viewportWidth * 0.4,
@@ -347,6 +348,7 @@ export default function Home() {
             </View>
           </ImageBackground>
         ) : (
+          // 我的植物總覽
           <View style={styles.selection_box}>
             {/* Header */}
             <View
@@ -396,7 +398,7 @@ export default function Home() {
             <View style={styles.selection_box_body}>
               {data.map((value, i) => {
                 const uri =
-                  ImageUriHome[value.type as keyof typeof ImageUriHome]; // type assertions
+                  plantImage[value.type as keyof typeof plantImage]; // type assertions
                 return (
                   <TouchableOpacity
                     key={i}
@@ -407,10 +409,10 @@ export default function Home() {
                   >
                     <View style={styles.itemBox}>
                       <Text style={{ fontSize: 12, marginBottom: 5 }}>
-                        2023/11/02{/* data.time */}
+                        {value.date}
                       </Text>
                       <Image
-                        source={{ uri }}
+                        source={uri}
                         resizeMode="contain"
                         style={{
                           width: (viewportWidth * 80) / 393,
@@ -418,7 +420,7 @@ export default function Home() {
                         }}
                       />
                       <Text style={{ fontSize: 12, marginTop: 5 }}>
-                        佛手虎尾蘭{/* data.name */}
+                        {value.name}
                       </Text>
                     </View>
                   </TouchableOpacity>
@@ -447,7 +449,7 @@ export default function Home() {
                 : () => setOpenMyPlant(!openMyPlant)
             }
           >
-            <BackIcon width={40} height={40} />
+            <BackIcon width={40} height={40} fill="#5b5d5c"/>
           </TouchableOpacity>
         </View>
       </View>
@@ -455,7 +457,8 @@ export default function Home() {
   }
   return (
     <ImageBackground source={homeBg} style={styles.container_outer}>
-      <Modal animationType="fade" visible={chooseCharacter}>
+      {/* 選擇植物 */}
+      <Modal animationType="fade" visible={chooseCharacter} >
         <View style={styles.deletemodalContainer}>
           <View
             style={{
@@ -472,7 +475,7 @@ export default function Home() {
           <View style={styles.modalView}>
             <Pressable
               onPress={() => {
-                setChooseCharacter(!chooseCharacter);
+                setChooseCharacter(false);
               }}
             >
               <Text style={{ fontSize: 18, fontWeight: "600" }}>就是你了!</Text>
@@ -486,12 +489,13 @@ export default function Home() {
         }}
         style={styles.start_button}
       />
-      <PlantButton
+      {/* 選擇植物的案紐 */}
+      {/* <PlantButton
         onPress={() => {
           setChooseCharacter(!chooseCharacter);
         }}
         style={styles.start_button2}
-      />
+      /> */}
       <Pressable
         onPress={() => {
           if (!(currentExpression === ("normal" || "watered" || "unwater"))) {

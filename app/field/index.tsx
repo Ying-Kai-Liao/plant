@@ -1,5 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import { StyleSheet, TouchableOpacity, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+  StyleProp,
+  ImageStyle,
+  ImageSourcePropType,
+} from "react-native";
 import { ImageBackground, Image } from "react-native";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "expo-router";
@@ -13,10 +20,18 @@ import SubmitButton from "../../components/ui/SubmitButton";
 import SizeButton from "../../components/ui/SizeButton";
 import StyleButton from "../../components/ui/StyleButton";
 
-import ImageUri from "../../constants/ImageUri";
 import BackIcon from "../../assets/images/icon/back.svg";
-import field_bg from "../../assets/images/field_selection_bg.png";
+
 import sizePlantLarge from "../../assets/images/field_items/plant_large.png";
+import sizePlantMedium from "../../assets/images/field_items/plant_medium.png";
+import sizePlantMedium2 from "../../assets/images/field_items/plant_medium2.png";
+import sizePlantSmall from "../../assets/images/field_items/plant_small.png";
+import timeLong from "../../assets/images/field_items/time_long.png"
+import timeShort from "../../assets/images/field_items/time_short.png"
+import q1 from "../../assets/images/field_items/q1.png"
+import q2 from "../../assets/images/field_items/q2.png"
+import q3 from "../../assets/images/field_items/q3.png"
+import q4 from "../../assets/images/field_items/q4.png"
 
 const { width: viewportWidth, height: viewportHeight } =
   Dimensions.get("window");
@@ -29,18 +44,18 @@ enum STEPS {
   STYLE = 3,
 }
 
-type sizeSelection = {
+type SizeSelection = {
   large?: boolean;
   medium?: boolean;
   small?: boolean;
 };
 
-type timeSelection = {
+type TimeSelection = {
   long?: boolean;
   short?: boolean;
 };
 
-type styleSelection = {
+type StyleSelection = {
   fashion?: boolean;
   neat?: boolean;
   elegent?: boolean;
@@ -50,27 +65,22 @@ export default function TabTwoScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [index, setIndex] = useState(0);
   const [step, setStep] = useState(STEPS.LOCATION);
-  const [sizeSelect, setSizeSelect] = useState<sizeSelection>({
+  const [data, setData] = useState({});
+  const [sizeSelect, setSizeSelect] = useState<SizeSelection>({
     large: false,
     medium: false,
     small: false,
   });
-  const [timeSelect, setTimeSelect] = useState<timeSelection>({
+  const [timeSelect, setTimeSelect] = useState<TimeSelection>({
     long: false,
     short: false,
   });
-  const [styleSelect, setStyleSelect] = useState<styleSelection>({
+  const [styleSelect, setStyleSelect] = useState<StyleSelection>({
     fashion: false,
     neat: false,
     elegent: false,
   });
 
-  useEffect(() => {
-    const imagesToPrefetch = Object.values(ImageUri);
-    imagesToPrefetch.forEach((image) => {
-      Image.prefetch(image);
-    });
-  }, []);
 
   const {
     register,
@@ -121,6 +131,41 @@ export default function TabTwoScreen() {
     setCustomValue("size", value);
   };
 
+  const isAnySizeSelected = (selection: SizeSelection): boolean => {
+    return Object.values(selection).some((value) => value === true);
+  };
+
+  const getImageStyle = () => {
+    
+    return {
+      ...styleConfig[size as Size][location as Location],
+      position: "absolute",
+    }; // Type assertion
+  };
+
+  const getCurrentImageSource = () => {
+    if (sizeSelect.small) return sizePlantSmall;
+    if (
+      sizeSelect.medium &&
+      (location == "bedroom" || location == "livingroom")
+    )
+      return sizePlantMedium;
+    if (
+      sizeSelect.medium &&
+      (location == "classroom" ||
+        location == "restaurant" ||
+        location == "office")
+    )
+      return sizePlantMedium2;
+    if (sizeSelect.large) return sizePlantLarge;
+    
+    console.log('no image')
+
+    console.log(sizeSelect)
+    console.log(location)
+    return ; // No selection
+  };
+
   const handleTimeSelect = (value: string, Unpress = false) => {
     if (Unpress) {
       setTimeSelect({ long: false, short: false });
@@ -153,6 +198,11 @@ export default function TabTwoScreen() {
     setIndex(index);
   };
 
+  useEffect(() => {
+    console.log("Updated location:", location);
+    setData(location)
+  }, [location]);
+
   const onBack = () => {
     setStep((value) => value - 1);
   };
@@ -162,8 +212,9 @@ export default function TabTwoScreen() {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    if (step == STEPS.SIZE && location == "") {
-      setCustomValue("location", 'livingroom');
+    if (step == STEPS.LOCATION && data.location == "") {
+      console.log('setted')
+      setCustomValue("location", "livingroom");
     }
     if (step !== STEPS.STYLE) {
       return onNext();
@@ -200,7 +251,7 @@ export default function TabTwoScreen() {
           <>
             <View style={styles.header}>
               <Image
-                source={{ uri: ImageUri.q1 }}
+                source={q1}
                 resizeMode="contain"
                 style={{
                   width: 130,
@@ -227,7 +278,7 @@ export default function TabTwoScreen() {
           <>
             <View style={styles.header}>
               <Image
-                source={{ uri: ImageUri.q2 }}
+                source={q2}
                 resizeMode="contain"
                 style={{
                   width: 130,
@@ -248,17 +299,14 @@ export default function TabTwoScreen() {
                   marginBottom: -20,
                 }}
               />
-              {sizeSelect.large && (
+              {isAnySizeSelected(sizeSelect) && (
                 <Image
-                  source={sizePlantLarge}
+                  source={getCurrentImageSource()
+                      ? getCurrentImageSource()
+                      : undefined
+                  }
                   resizeMode="contain"
-                  style={{
-                    position: "absolute",
-                    width: 100,
-                    height: 100,
-                    top: 166,
-                    left: 26,
-                  }}
+                  style={getImageStyle() as StyleProp<ImageStyle>}
                 />
               )}
               <SelectionButton label="選擇想要的種植大小" />
@@ -299,7 +347,7 @@ export default function TabTwoScreen() {
           <>
             <View style={styles.header}>
               <Image
-                source={{ uri: ImageUri.q3 }}
+                source={q3}
                 resizeMode="contain"
                 style={{
                   width: 130,
@@ -320,22 +368,19 @@ export default function TabTwoScreen() {
                   marginBottom: -20,
                 }}
               />
-              {sizeSelect.large && (
+              {isAnySizeSelected(sizeSelect) && (
                 <Image
-                  source={sizePlantLarge}
+                  source={getCurrentImageSource()
+                      ? getCurrentImageSource()
+                      : undefined
+                  }
                   resizeMode="contain"
-                  style={{
-                    position: "absolute",
-                    width: 100,
-                    height: 100,
-                    top: 166,
-                    left: 26,
-                  }}
+                  style={getImageStyle() as StyleProp<ImageStyle>}
                 />
               )}
               {timeSelect.long && (
                 <Image
-                  source={{ uri: ImageUri.timeLong }}
+                  source={timeLong}
                   resizeMode="contain"
                   style={{
                     position: "absolute",
@@ -348,7 +393,7 @@ export default function TabTwoScreen() {
               )}
               {timeSelect.short && (
                 <Image
-                  source={{ uri: ImageUri.timeShort }}
+                  source={timeShort}
                   resizeMode="contain"
                   style={{
                     position: "absolute",
@@ -393,7 +438,7 @@ export default function TabTwoScreen() {
           <>
             <View style={styles.header}>
               <Image
-                source={{ uri: ImageUri.q4 }}
+                source={q4}
                 resizeMode="contain"
                 style={{
                   width: 130,
@@ -414,22 +459,19 @@ export default function TabTwoScreen() {
                   marginBottom: -40,
                 }}
               />
-              {sizeSelect.large && (
+              {isAnySizeSelected(sizeSelect) && (
                 <Image
-                  source={sizePlantLarge}
+                  source={getCurrentImageSource()
+                      ? getCurrentImageSource()
+                      : undefined
+                  }
                   resizeMode="contain"
-                  style={{
-                    position: "absolute",
-                    width: 100,
-                    height: 100,
-                    top: 166,
-                    left: 26,
-                  }}
+                  style={getImageStyle() as StyleProp<ImageStyle>}
                 />
               )}
               {timeSelect.long && (
                 <Image
-                  source={{ uri: ImageUri.timeLong }}
+                  source={timeLong}
                   resizeMode="contain"
                   style={{
                     position: "absolute",
@@ -442,7 +484,7 @@ export default function TabTwoScreen() {
               )}
               {timeSelect.short && (
                 <Image
-                  source={{ uri: ImageUri.timeShort }}
+                  source={timeShort}
                   resizeMode="contain"
                   style={{
                     position: "absolute",
@@ -567,3 +609,52 @@ const styles = StyleSheet.create({
     zIndex: 10, // Ensure it's above other components
   },
 });
+
+interface Style {
+  width: number;
+  height: number;
+  top: number;
+  left: number;
+}
+
+interface LocationStyles {
+  [key: string]: Style; // Index signature
+}
+
+interface SizeStyles {
+  small: LocationStyles;
+  medium: LocationStyles;
+  large: LocationStyles;
+}
+
+const styleConfig: SizeStyles = {
+  small: {
+    livingroom: { width: 34, height: 34, top: 116, left: 242 },
+    bedroom: { width: 34, height: 34, top: 120, left: 236 },
+    classroom: { width: 34, height: 34, top: 180, left: 166 },
+    restaurant: { width: 34, height: 34, top: 183, left: 163 },
+    office: { width: 34, height: 34, top: 110, left: 240 },
+  },
+  medium: {
+    livingroom: { width: 85, height: 85, top: 166, left: 26 },
+    bedroom: { width: 85, height: 85, top: 176, left: 31 },
+    classroom: { width: 120, height: 120, top: 196, left: 220 },
+    restaurant: { width: 90, height: 90, top: 210, left: 136 },
+    office: { width: 85, height: 85, top: 166, left: 26 },
+  },
+  large: {
+    livingroom: { width: 110, height: 110, top: 156, left: 26 },
+    bedroom: { width: 110, height: 110, top: 188, left: 200 },
+    classroom: { width: 130, height: 130, top: 176, left: 26 },
+    restaurant: { width: 120, height: 120, top: 186, left: 118 },
+    office: { width: 110, height: 110, top: 156, left: 26 },
+  },
+};
+
+type Size = "small" | "medium" | "large";
+type Location =
+  | "livingroom"
+  | "bedroom"
+  | "classroom"
+  | "restaurant"
+  | "office";

@@ -1,35 +1,40 @@
-export default {
-    timeLong: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191771319642095656/time_long.png?ex=65a6a688&is=65943188&hm=95e0242f7417907463a617cd082139634c3c84a44ee8666e17d00f9a99cbd8e4&',
-    timeShort: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191771306421649438/time_short.png?ex=65a6a685&is=65943185&hm=944f8e060a08da28d401def2767511cbcd182db4773cd1e081959124f8ecfd4f&',
-    q1: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191773164208935022/Q_1.png?ex=65a6a840&is=65943340&hm=83d1e8f34096ae19c746ea36beb829f8e126ed1061e7f3e793b29ec1cc937adf&',
-    q2:'https://cdn.discordapp.com/attachments/1191771159168028695/1191773164766769202/Q_2.png?ex=65a6a840&is=65943340&hm=70b694a758d73a5e3a76946f435cd14f1c394acf331a2541df6491dc558d6d73&',
-    q3: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191773164980686858/Q_3.png?ex=65a6a840&is=65943340&hm=21835cce9902d9d0a3a4af4f1c00423ec711aab1f394d0b9ee97933de10ddd59&',
-    q4: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191773164468977824/Q_4.png?ex=65a6a840&is=65943340&hm=787bd55f4d5969a045d01e32b1023af976d3f9f14de32da7e11c68aaf01180ad&',
-}
+import plant1 from "../assets/images/handbook/佛手虎尾蘭.png"
+import plant2 from "../assets/images/handbook/吊蘭.png"
+import plant3 from "../assets/images/handbook/常春藤.png"
+import plant4 from "../assets/images/handbook/心葉蔓綠絨.png"
+import plant5 from "../assets/images/handbook/橡皮樹.png"
+import plant6 from "../assets/images/handbook/白金葛.png"
+import plant7 from "../assets/images/handbook/白鶴芋.png"
+import plant8 from "../assets/images/handbook/蘆薈.png"
+import plant9 from "../assets/images/handbook/袖珍椰子.png"
+import plant10 from "../assets/images/handbook/銀葉虎斑木.png"
+import plant11 from "../assets/images/handbook/鐵線蕨.png"
+import plant12 from "../assets/images/handbook/黃椰子.png"
+import plant13 from "../assets/images/handbook/黃金虎尾蘭.png"
+import plant14 from "../assets/images/handbook/龍血樹.png"
+import plant15 from "../assets/images/handbook/龜背芋.png"
 
-export const ImageUriHome = {
-    1: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191835952860123318/8a61262d8f4328c0.png?ex=65a6e2ba&is=65946dba&hm=f9bb332acb6989cb01e67dc3aa05bec771f48624d26a32b8589df23eb14d958c&',
-    2: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191835953149509732/04fccdf28f419fad.png?ex=65a6e2ba&is=65946dba&hm=6b71c8fa5eb050499103f8e5036ed9d7f0beaf5969d2089892d5aced5a3882a9&',
-    3: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191835953438937088/37aed08a6610db93.png?ex=65a6e2ba&is=65946dba&hm=27436f5bb9fd4204f34bc8d00dd6fcc4951ea59835247217f31af2ace36a0dd0&',
-    4: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191835953677991986/3111c4ad28193370.png?ex=65a6e2ba&is=65946dba&hm=c9e0c4fd61ecefa8716fc67081ac026f204a3e256c27b8d380634031a95e0129&',
-    5: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191835953938051152/1f62ce013469e0b8.png?ex=65a6e2ba&is=65946dba&hm=c8c6660d80a6c2e053aa113146226d77ed2268baa6b704c6b89e67d17098cbe3&',
-    6: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191835954244243456/0937c6c58b60311a.png?ex=65a6e2ba&is=65946dba&hm=3cb81094f828adf95f7a1e50c1a7b6d66271ca0d9745fc332a58e6aec3a607d2&',
-    7: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191835954500075630/4d38998c0e7d25e5.png?ex=65a6e2ba&is=65946dba&hm=bdbe263a8fca2f53940f790ab6c1325a821f7227dfb0224ede7f784b57042c9e&',
-    8: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191835954894352526/ff2f01a66dbf4b07.png?ex=65a6e2ba&is=65946dba&hm=6caa69bc2e42a39ba80a09a14e32e9ef0a443548596ef04ec9e19b85a0a179e8&',
-    9: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191835955317985331/8c2ef5c18c1ffbd1.png?ex=65a6e2ba&is=65946dba&hm=73e268c939568bffe32b27eeb9fca4bf305c67b1a884616dcabb4ebc6763e143&',
-    10: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191835955569623080/276307c14903e409.png?ex=65a6e2bb&is=65946dbb&hm=7ce28a62ce423fbe8601c3f54f0ef104040f96b5ad61f0443c5e1949161091d0&',
-    11: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191835967921852416/04d357b3ffdbf1e9.png?ex=65a6e2bd&is=65946dbd&hm=60b4f1b39848a725649f78ab1bddc22802dd1cf37d54d2cc5cb958ed57e4a282&',
-    12: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191835968362258502/fd277eb7370d3fde.png?ex=65a6e2be&is=65946dbe&hm=691802c080f57273a0c421387075fa2681149293849042461ece3da131b924a1&',
-    13: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191835968731353108/32ca6d02575f63c7.png?ex=65a6e2be&is=65946dbe&hm=99dbb44cfd8edb59472a6e37c71586f725a947b6ec4a740b911552f617f8386a&',
-    14: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191835969092075530/6df5f8898da282f2.png?ex=65a6e2be&is=65946dbe&hm=99652536bfc0dfbd0428c341f0d118eec460dcefea0621116994ac694ea704cc&',
-    15: 'https://cdn.discordapp.com/attachments/1191771159168028695/1191835969482133646/1d1039f2ff246970.png?ex=65a6e2be&is=65946dbe&hm=99fe0d8d6b0f46d5531d8eb513e48306ee870a10a5d1f2ce21a91ed3cde102c1&',
+// import plant1 from "../assets/images/handbook/吊蘭.png"
+// import plant2 from "../assets/images/handbook/常春藤.png"
+// import plant3 from "../assets/images/handbook/心葉蔓綠絨.png"
+// import plant4 from "../assets/images/handbook/橡皮樹.png"
+// import plant5 from "../assets/images/handbook/白鶴芋.png"
+// import plant6 from "../assets/images/handbook/蘆薈.png"
+// import plant7 from "../assets/images/handbook/虎尾蘭.png"
+// import plant8 from "../assets/images/handbook/袖珍椰子.png"
+// import plant9 from "../assets/images/handbook/銀葉虎斑木.png"
+// import plant10 from "../assets/images/handbook/鐵線蕨.png"
+// import plant11 from "../assets/images/handbook/黃椰子.png"
+// import plant12 from "../assets/images/handbook/黃金葛.png"
+// import plant13 from "../assets/images/handbook/龍血樹.png"
+// import plant14 from "../assets/images/handbook/龜背芋.png"
 
-}
+
 
 export const ImageUriPersonal ={
-    avatarDemo: "https://cdn.discordapp.com/attachments/1191771159168028695/1192824328455196753/-44.png?ex=65aa7b39&is=65980639&hm=fee10a9e3e27a8e8a6b7b26d312d8939bbdb27aec67336adbc9671fc648eb94e&",
-    cameraIcon: "https://cdn.discordapp.com/attachments/1191771159168028695/1192824328073527357/-43.png?ex=65aa7b39&is=65980639&hm=bbd52d95c8913513b1536a7fe0c1194477555a81112e5aec409b81aca239db56&",
-    storeImage: 'https://cdn.discordapp.com/attachments/1191771159168028695/1192834649265815582/-29.png?ex=65aa84d6&is=65980fd6&hm=42b6ac163a1c590a6e45edbf52b80fe5a8e6b62e5aaef9d6bb58cc7b10dd5272&',
+    avatarDemo: "https://cdn.discordapp.com/attachments/1191771159168028695/1192824328455196753/-44.png?ex=65eb14b9&is=65d89fb9&hm=39561060c440b121bd5dc1de89e3cfb266f29a5cf760899e6648db4db0df2c8f&",
+    cameraIcon: "https://cdn.discordapp.com/attachments/1191771159168028695/1192824328073527357/-43.png?ex=65eb14b9&is=65d89fb9&hm=4166537270860c0a78b9f377697e8d4cb38018feb59eb084e4d7412092cb2329&",
+    storeImage: 'https://cdn.discordapp.com/attachments/1191771159168028695/1192834649265815582/-29.png?ex=65eb1e56&is=65d8a956&hm=3a6bfbb56fadd609475707b3ed6e39797a5ceb11cc636cd5b8baa5f284214c59&',
     1: 'https://cdn.discordapp.com/attachments/1191771159168028695/1192834363369476166/-54.png?ex=65aa8492&is=65980f92&hm=fc72953193a6cddffb0a677f1173b0e78c395de2302295646fedec38640b2787&',
     2: 'https://cdn.discordapp.com/attachments/1191771159168028695/1192834363944091689/-56.png?ex=65aa8492&is=65980f92&hm=45f5aa79f4ac2d6463b0c7d69c74b8836ccfad801753289f7be408089a9c412b&',
     3: 'https://cdn.discordapp.com/attachments/1191771159168028695/1192834363944091689/-56.png?ex=65aa8492&is=65980f92&hm=45f5aa79f4ac2d6463b0c7d69c74b8836ccfad801753289f7be408089a9c412b&',
@@ -44,3 +49,39 @@ export const ImageUriPersonal ={
     store4: 'https://cdn.discordapp.com/attachments/1191771159168028695/1192834651602047056/-35.png?ex=65aa84d6&is=65980fd6&hm=43c71da0029e5860b4a32ccbad6c02a3806b0837499f4f1785b5f6b674263bb5&',
     store5: 'https://cdn.discordapp.com/attachments/1191771159168028695/1192834649932714054/-36.png?ex=65aa84d6&is=65980fd6&hm=3423ba3d4e639bbcd385cc4486e411f5b141e433719862f0c00396182f8f4dce&'
 }
+
+export const plantImage = {
+    1: plant1, // 佛手虎尾蘭
+    2: plant2, // 吊蘭
+    3: plant3, // 常春藤
+    4: plant4, // 心葉蔓綠絨
+    5: plant5, // 橡皮樹
+    6: plant6, // 白金葛
+    7: plant7, // 白鶴芋
+    8: plant8, // 蘆薈
+    9: plant9, // 袖珍椰子
+    10: plant10, // 銀葉虎斑木
+    11: plant11, // 鐵線蕨
+    12: plant12, // 黃椰子
+    13: plant13, // 黃金虎尾蘭
+    14: plant14, // 龍血樹
+    15: plant15  // 龜背芋
+};
+
+export const plantType = {
+    1: "佛手虎尾蘭",
+    2: "吊蘭",
+    3: "常春藤",
+    4: "心葉蔓綠絨",
+    5: "橡皮樹",
+    6: "白金葛",
+    7: "白鶴芋",
+    8: "蘆薈",
+    9: "袖珍椰子",
+    10: "銀葉虎斑木",
+    11: "鐵線蕨",
+    12: "黃椰子",
+    13: "黃金虎尾蘭",
+    14: "龍血樹",
+    15: "龜背芋"
+  };

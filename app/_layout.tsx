@@ -7,7 +7,7 @@ import {
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
-import { useColorScheme } from "react-native";
+import { useColorScheme, Dimensions, View, StyleSheet, Text } from "react-native";
 import SplashComponent from "../components/splash/video";
 
 export {
@@ -49,19 +49,45 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
+    Dimensions.get("window");
+  console.log("width: ", SCREEN_WIDTH, "height: ", SCREEN_HEIGHT);
+  const BASE_WIDTH = 393;
+  const BASE_HEIGHT = 852;
+  const scaleWidth = SCREEN_WIDTH / BASE_WIDTH;
+  const scaleHeight = SCREEN_HEIGHT / BASE_WIDTH;
 
   return (
-    <SplashComponent>
-      <ThemeProvider value={DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-          <Stack.Screen name="field/index" options={{ headerShown: false }} />
-          <Stack.Screen name="field/results" options = {{headerShown: false}} />
-          <Stack.Screen name="dairy" options={{ headerShown: false }} />
-        </Stack>
-      </ThemeProvider>
-    </SplashComponent>
+      <SplashComponent>
+        {/* <View style={{flex: 1, transform: [{ scale: scaleWidth }]}} collapsable={false}> */}
+        {/* <View style={{flex: 1, aspectRatio: BASE_WIDTH/BASE_HEIGHT}} collapsable={false}> */}
+        <View style={{flex: 1}} collapsable={false}>
+
+          
+        <ThemeProvider value={DefaultTheme}>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+            <Stack.Screen name="field/index" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="field/results"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="dairy" options={{ headerShown: false }} />
+          </Stack>
+        </ThemeProvider></View>
+
+      </SplashComponent>
   );
 }
 //bg r242 g241 b248
+const styles = StyleSheet.create({
+  container: {
+    flex: 0.5,
+    transform: [{ scale: 1 }],
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff'
+  },
+  // Add styles for other components that might need individual scaling
+});

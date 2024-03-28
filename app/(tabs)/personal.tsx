@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Modal,
   Pressable,
+  ImageSourcePropType,
 } from "react-native";
 
 import { Text, View } from "../../components/Themed";
@@ -17,14 +18,31 @@ import DairyIcon from "../../assets/images/icon/dairy.svg"
 import MoreIcon from "../../assets/images/home/more.svg";
 import BackIcon from "../../assets/images/icon/back.svg";
 
+import storeImage from "../../assets/images/personal/storeImage.png"
+import camera from "../../assets/images/personal/camera.png"
+import avatar from "../../assets/images/personal/avatar.png"
+import item1 from "../../assets/images/personal/item1.png"
+import item2 from "../../assets/images/personal/item2.png"
+import item3 from "../../assets/images/personal/item3.png"
+import item4 from "../../assets/images/personal/item4.png"
+import item5 from "../../assets/images/personal/item5.png"
+import emoji1 from "../../assets/images/personal/emoji1.png"
+import emoji2 from "../../assets/images/personal/emoji2.png"
+import emoji3 from "../../assets/images/personal/emoji3.png"
+import emoji4 from "../../assets/images/personal/emoji4.png"
+import demo1 from "../../assets/images/personal/demo1.png"
+import demo2 from "../../assets/images/personal/demo2.png"
+import demo3 from "../../assets/images/personal/demo3.png"
+import demo4 from "../../assets/images/personal/demo4.png"
+
 const { width: viewportWidth, height: viewportHeight } =
   Dimensions.get("window");
 
 type PostData = {
   id: number;
   date: string;
-  uri: string;
-  emoji: string;
+  uri: ImageSourcePropType;
+  emoji: ImageSourcePropType;
   content: string;
 };
 
@@ -33,7 +51,7 @@ type StoreData = {
   name: string;
   context: string;
   price: number;
-  uri: string;
+  uri: ImageSourcePropType;
 };
 
 const storeData: StoreData[] = [
@@ -42,7 +60,7 @@ const storeData: StoreData[] = [
     name: "負離子陶瓷球",
     context: "美化盆景，防止土壤濺出 \n透氣性佳，幫助土壤保持濕度",
     price: 180,
-    uri: ImageUriPersonal.store1,
+    uri: item1,
   },
   {
     id: 2,
@@ -50,7 +68,7 @@ const storeData: StoreData[] = [
     context:
       "覆蓋盆土美化、裝飾、花盆底部鋪底 \n鋪面可減緩水分散失、減少雜草生長 ",
     price: 190,
-    uri: ImageUriPersonal.store2,
+    uri: item2,
   },
   {
     id: 3,
@@ -58,7 +76,7 @@ const storeData: StoreData[] = [
     context:
       "覆蓋盆土美化、裝飾、花盆底部鋪底 \n鋪面可減緩水分散失、減少雜草生長",
     price: 160,
-    uri: ImageUriPersonal.store3,
+    uri: item3,
   },
   {
     id: 4,
@@ -66,14 +84,14 @@ const storeData: StoreData[] = [
     context:
       "覆蓋盆土美化、裝飾、花盆底部鋪底 \n鋪面可減緩水分散失、減少雜草生長",
     price: 250,
-    uri: ImageUriPersonal.store4,
+    uri: item4,
   },
   {
     id: 5,
     name: "益生源肥",
     context: "能给作物提供必需的營養元素外 \n還能吸附土壤中重金屬、致病物質",
     price: 290,
-    uri: ImageUriPersonal.store5,
+    uri: item5,
   },
 ];
 
@@ -89,43 +107,43 @@ export default function Personal() {
       {
         id: 1,
         date: "2023/11/06",
-        uri: ImageUriPersonal[1],
-        emoji: ImageUriPersonal.smile,
+        uri: demo1,
+        emoji: emoji4,
         content: "something content",
       },
       {
         id: 2,
         date: "2023/11/08",
-        uri: ImageUriPersonal[2],
-        emoji: ImageUriPersonal.laugh,
+        uri: demo2,
+        emoji: emoji1,
         content: "something content",
       },
       {
         id: 3,
         date: "2023/11/09",
-        uri: ImageUriPersonal[3],
-        emoji: ImageUriPersonal.happy,
+        uri: demo3,
+        emoji: emoji3,
         content: "something content",
       },
       {
         id: 4,
         date: "2023/11/10",
-        uri: ImageUriPersonal[4],
-        emoji: ImageUriPersonal.love,
+        uri: demo4,
+        emoji: emoji2,
         content: "something content",
       },
       {
         id: 5,
         date: "2023/12/06",
-        uri: ImageUriPersonal[1],
-        emoji: ImageUriPersonal.happy,
+        uri: demo1,
+        emoji: emoji4,
         content: "something content",
       },
       {
         id: 5,
         date: "2023/12/06",
-        uri: ImageUriPersonal[1],
-        emoji: ImageUriPersonal.happy,
+        uri: demo2,
+        emoji: emoji2,
         content: "something content",
       },
     ]);
@@ -226,7 +244,7 @@ export default function Personal() {
                 </Text>
               </View>
               <Image
-                source={{ uri: ImageUriPersonal.storeImage }}
+                source={storeImage}
                 resizeMode="contain"
                 style={{
                   position: "absolute",
@@ -245,7 +263,7 @@ export default function Personal() {
                 {storeData.map((data, i) => (
                   <View key={i} style={styles.storeModalListItem}>
                     <Image
-                      source={{ uri: data.uri }}
+                      source={data.uri}
                       resizeMode="contain"
                       style={{
                         width: (viewportWidth * 0.9 - 72) / 2,
@@ -307,12 +325,12 @@ export default function Personal() {
         >
           <View style={{ height: 90 }}>
             <Image
-              source={{ uri: ImageUriPersonal.avatarDemo }}
+              source={avatar}
               resizeMode="contain"
               style={{ width: 90, height: 90 }}
             />
             <Image
-              source={{ uri: ImageUriPersonal.cameraIcon }}
+              source={camera}
               resizeMode="contain"
               style={{
                 position: "absolute",
@@ -373,7 +391,7 @@ export default function Personal() {
                     }}
                   >
                     <Image
-                      source={{ uri: value.uri }}
+                      source={value.uri}
                       resizeMode="contain"
                       style={{
                         width: (viewportWidth - 72) / 2,
@@ -383,7 +401,7 @@ export default function Personal() {
                     />
                   </TouchableOpacity>
                   <Image
-                    source={{ uri: value.emoji }}
+                    source={value.emoji}
                     resizeMode="contain"
                     style={{
                       width: 50,
