@@ -59,12 +59,12 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "rgb(255, 255, 255)",
     marginLeft: 40,
+    marginTop: viewportHeight * 0.08
   },
   header: {
-    marginTop: viewportHeight * 0.08,
-    height: 50,
+    height: viewportHeight * 0.08 + 50,
     width: viewportWidth,
-    backgroundColor: "#93ac8d",
+    backgroundColor: "rgb(97, 188, 139)",
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     alignItems: "flex-start",

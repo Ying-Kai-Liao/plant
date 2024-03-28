@@ -250,11 +250,10 @@ const InfoModal: React.FC<InfoModalProps> = ({ id, visible, setVisible }) => {
           {/* still need modify here */}
           <TouchableOpacity
             onPress={closeModal}
-            style={{ backgroundColor: "black", padding: 8, borderRadius: 20 }}
+            style={{ backgroundColor: "white", padding: 8, borderRadius: 20 }}
           >
             <Text
               style={{
-                color: "rgb(242, 241, 248)",
                 fontWeight: "500",
                 letterSpacing: 2,
               }}
@@ -425,7 +424,7 @@ const Option = ({
         <DecoSVG
           width={viewportWidth / 3}
           height={70}
-          fill="rgb(148, 172, 142)"
+          fill="rgb(97, 188, 139)"
         />
         <Image
           source={option_deco2}
@@ -634,7 +633,7 @@ const ModalCard = ({
 }: ModalCardProps) => {
   return (
     <View style={styles.modalCard}>
-      <Icon width={40} height={40} fill="rgb(165, 182, 211)" />
+      <Icon width={40} height={40} fill="rgb(90, 195, 217)" />
       <View style={[{ flex: 1, marginLeft: 15 }, star && { marginTop: 20 }]}>
         {star && (
           <View style={{ flexDirection: "row" }}>
@@ -643,7 +642,7 @@ const ModalCard = ({
                 key={index}
                 width={20}
                 height={20}
-                fill="rgba(0, 0, 0, 0.7)"
+                fill="rgb(245, 210, 118)"
                 style={{ marginRight: 4 }}
               />
             ))}
@@ -777,7 +776,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingLeft: viewportWidth * 0.12,
-    backgroundColor: "#94AC8E",
+    backgroundColor: "rgb(97, 188, 139)",
     alignItems: "flex-start",
     justifyContent: "center",
     overflow: "visible",

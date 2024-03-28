@@ -32,7 +32,7 @@ const SizeButton = ({ onPress, style, label, selected = false }: SelectionButton
     // Interpolate the background color value
     const backgroundColor = backgroundColorAnim.interpolate({
       inputRange: [0, 1],
-      outputRange: ['#e5e5e6', '#727171'], // Unselected color to selected color
+      outputRange: ['rgb(233, 246, 250)', 'rgb(90, 195, 217)'], // Unselected color to selected color
     });
   
     // Combine the animated style with the passed style

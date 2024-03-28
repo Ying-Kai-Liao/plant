@@ -25,12 +25,10 @@ const PlantButton = ({ onPress, style }: StartButtonProps) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#727071", // Use the appropriate background color
+    backgroundColor: "rgb(90, 195, 217)", // Use the appropriate background color
     paddingHorizontal: 28, // Horizontal padding
     paddingVertical: 10, // Vertical padding
     borderRadius: 30, // Adjust the border radius to match your design
-    borderWidth: 1, // Set border width
-    borderColor: "#ddd", // Set border color
     alignItems: "center", // Center the text inside the button
     justifyContent: "center", // Center the text inside the button
     shadowColor: "#000",

@@ -110,7 +110,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = React.memo(
             marginHorizontal: -15,
             zIndex: 10,
           }}
-          dotColor="#a4b5d2"
+          dotColor="rgb(97, 188, 139)"
           inactiveDotStyle={{
             borderWidth: 0,
             zIndex: 0,

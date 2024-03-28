@@ -19,7 +19,7 @@ import office_png from "../../assets/images/bg5.png";
 import restaurant_png from "../../assets/images/bg4.png";
 
 import classroomLottie from "../../assets/lotties/scene/classroom.json";
-import livingroomLottie from "../../assets/lotties/scene/livingroom.json";
+// import livingroomLottie from "../../assets/lotties/scene/livingroom.json";
 import bedroomLottie from "../../assets/lotties/scene/bedroom.json";
 import officeLottie from "../../assets/lotties/scene/office.json";
 import restaurantLottie from "../../assets/lotties/scene/restaurant.json";
@@ -185,7 +185,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = React.memo(
               position: "absolute",
             }}
             dotStyle={{}}
-            dotColor="#a4b5d2"
+            dotColor="rgb(97, 188, 139)"
             inactiveDotStyle={{
               borderWidth: 0,
               zIndex: 0,

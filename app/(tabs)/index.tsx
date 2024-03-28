@@ -20,6 +20,8 @@ import WaterIcon from "../../assets/images/icon/water.svg";
 import FertilizeIcon from "../../assets/images/icon/fertilize.svg";
 import DateIcon from "../../assets/images/icon/date.svg";
 import TimeIcon from "../../assets/images/icon/time.svg";
+import AddIcon from "../../assets/images/home/add.svg"
+
 import homeBg from "../../assets/images/home/home_bg.png";
 import detailBg from "../../assets/images/home/detail_bg.png";
 import addImage from "../../assets/images/home/add.png";
@@ -428,17 +430,7 @@ export default function Home() {
               })}
             </View>
             {/* Add Button , still need implement function (Modal component) */}
-            <Image
-              source={addImage}
-              resizeMode="contain"
-              style={{
-                position: "absolute",
-                width: 120,
-                height: 120,
-                right: viewportWidth * 0.01,
-                bottom: viewportHeight * 0.03,
-              }}
-            />
+            <AddIcon fill="rgb(90 195 217)"/>
           </View>
         )}
         <View style={styles.backButton}>
@@ -466,6 +458,7 @@ export default function Home() {
               paddingVertical: 8,
               borderRadius: 20,
               marginTop: viewportHeight * 0.1,
+              backgroundColor: "rgb(240, 248, 237)"
             }}
           >
             <Text style={{ fontSize: 18 }}>選擇你專屬的小精靈</Text>
@@ -544,7 +537,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "rgb(242, 241, 248)",
+    backgroundColor: "rgb(240, 248, 237)",
   },
   container_detail: {
     flex: 1,
@@ -681,7 +674,7 @@ const styles = StyleSheet.create({
   },
   deletemodalContainer: {
     flex: 1,
-    backgroundColor: "rgba(242, 241, 248, 1)",
+    backgroundColor: "rgba(255, 255, 255, 1)",
     alignItems: "center",
     justifyContent: "flex-start",
   },

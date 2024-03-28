@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flexDirection: "row", // Arrange text and icon in a row
-    backgroundColor: "#717171", // Use the appropriate background color
+    backgroundColor: "rgb(90, 195, 217)", // Use the appropriate background color
     paddingLeft: 40, // Horizontal padding
     paddingRight: 30,
     paddingVertical: 10, // Vertical padding

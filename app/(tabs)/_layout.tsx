@@ -118,7 +118,7 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   focusedTab: {
-    backgroundColor: 'rgba(232, 243, 226, 1)', // Example background color
+    backgroundColor: 'rgba(165, 212, 175, 0.25)',
     borderRadius: 20, // You can adjust this as needed
     paddingHorizontal: 15, // Horizontal padding
     paddingVertical: 10, // Vertical padding

@@ -542,7 +542,7 @@ export default function TabTwoScreen() {
       {bodyContent}
       <Link href={"/field_selection"} style={styles.backButton} asChild>
         <TouchableOpacity>
-          <BackIcon width={40} height={40} />
+          <BackIcon width={40} height={40} fill="rgba(0, 0, 0, 0.5)"/>
         </TouchableOpacity>
       </Link>
     </View>
@@ -554,7 +554,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-end",
-    backgroundColor: "rgba(240,241,247,255)",
+    backgroundColor: "rgba(240,248,237,1)",
   },
   selection_box: {
     flex: 0.75,
