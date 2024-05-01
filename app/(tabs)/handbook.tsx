@@ -13,6 +13,8 @@ import { ImageProps, SvgProps } from "react-native-svg";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Svg, { G, Path } from "react-native-svg";
 
+import globalStyles from "../../styles/styles"
+
 import EditScreenInfo from "../../components/EditScreenInfo";
 import { Text, View } from "../../components/Themed";
 import React, { ReactElement, useEffect, useState } from "react";
@@ -103,19 +105,19 @@ export default function HandBook() {
       <View style={styles.head_container}>
         <Image source={hb_main} resizeMode="contain" style={{ width: "70%" }} />
         <Text
-          style={{
+          style={[{
             position: "relative",
             color: "white",
             top: -80,
             fontSize: 25,
             fontWeight: "600",
-          }}
+          }, globalStyles.regular]}
         >
           植物圖鑑
         </Text>
       </View>
       <SafeAreaView style={styles.card_box}>
-        <Text style={styles.title}>推薦植物</Text>
+        <Text style={[styles.title, globalStyles.medium]}>推薦植物</Text>
         <FlatList
           data={dataImage.map((plant: any, index: number) => ({
             ...plant,
@@ -149,7 +151,7 @@ const SearchBox = () => {
   return (
     <View style={styles.searchBoxContainer}>
       <TextInput
-        style={clicked ? styles.input_clicked : styles.input_unclicked}
+        style={[(clicked ? styles.input_clicked : styles.input_unclicked), globalStyles.regular]}
         placeholder="🔍搜尋植物"
         placeholderTextColor="#fff"
         value={searchQuery}
@@ -163,8 +165,8 @@ const SearchBox = () => {
         // Optional: Add an onSubmitEditing prop if you want to handle submission events
       />
       {clicked && (
-        <View style={styles.dropdown}>
-          <Text style={{ color: "white" }}>dropdown</Text>
+        <View style={[styles.dropdown]}>
+          <Text style={[{ color: "white" }, globalStyles.regular]}>dropdown</Text>
         </View>
       )}
     </View>
@@ -185,12 +187,12 @@ const Card: React.FC<CardProps> = ({ uri, name, id, onPress }) => {
         {uri && <Image source={uri} resizeMode="contain" style={{ flex: 1 }} />}
         {name && (
           <Text
-            style={{
+            style={[{
               marginTop: 8,
               fontWeight: "600",
               fontSize: 13,
               color: "rgb(98, 89, 82)",
-            }}
+            }, globalStyles.medium]}
           >
             {name}
           </Text>
@@ -253,19 +255,19 @@ const InfoModal: React.FC<InfoModalProps> = ({ id, visible, setVisible }) => {
             style={{ backgroundColor: "white", padding: 8, borderRadius: 20 }}
           >
             <Text
-              style={{
+              style={[{
                 fontWeight: "500",
                 letterSpacing: 2,
-              }}
+              }, globalStyles.medium]}
             >
-              ・加入我的植物{" "}
+              ・ 加入我的植物{" "}
             </Text>
           </TouchableOpacity>
           <Text
             style={[
               styles.modal_textStyle1,
+              globalStyles.medium,
               {
-                fontWeight: "600",
                 fontSize: 26,
                 letterSpacing: 2,
                 marginTop: 30,
@@ -277,7 +279,8 @@ const InfoModal: React.FC<InfoModalProps> = ({ id, visible, setVisible }) => {
           <Text
             style={[
               styles.modal_textStyle1,
-              { fontWeight: "300", fontSize: 10, marginBottom: 13 },
+              globalStyles.regular,
+              { fontWeight: "300", fontSize: 10, marginBottom: 13, marginTop: 2 },
             ]}
           >
             {dataImage[id].latinName}
@@ -285,6 +288,7 @@ const InfoModal: React.FC<InfoModalProps> = ({ id, visible, setVisible }) => {
           <Text
             style={[
               styles.modal_textStyle1,
+              globalStyles.medium,
               {
                 fontWeight: "600",
                 fontSize: 18,
@@ -298,6 +302,7 @@ const InfoModal: React.FC<InfoModalProps> = ({ id, visible, setVisible }) => {
           <Text
             style={[
               styles.modal_textStyle1,
+              globalStyles.medium,
               {
                 fontWeight: "600",
                 fontSize: 18,
@@ -311,6 +316,7 @@ const InfoModal: React.FC<InfoModalProps> = ({ id, visible, setVisible }) => {
           <Text
             style={[
               styles.modal_textStyle1,
+              globalStyles.medium,
               {
                 fontWeight: "600",
                 fontSize: 18,
@@ -324,6 +330,7 @@ const InfoModal: React.FC<InfoModalProps> = ({ id, visible, setVisible }) => {
           <Text
             style={[
               styles.modal_textStyle1,
+              globalStyles.medium,
               { fontWeight: "600", fontSize: 13, letterSpacing: 0.5 },
             ]}
           >
@@ -415,7 +422,7 @@ const Option = ({
             resizeMode="contain"
             style={{ width: 50, height: 50 }}
           />
-          <Text style={[styles.modal_textStyle1, styles.modal_option_text]}>
+          <Text style={[styles.modal_textStyle1, styles.modal_option_text, globalStyles.medium]}>
             {label}
           </Text>
         </View>
@@ -476,11 +483,11 @@ const MainContent = ({ id, selectedOption }: MainContentProps) => {
             >
               <View style={{ width: "80%" }}>
                 <Text
-                  style={{ fontWeight: "500", fontSize: 15, paddingBottom: 5 }}
+                  style={[{ fontWeight: "500", fontSize: 16, paddingBottom: 5 }, globalStyles.medium]}
                 >
                   特色
                 </Text>
-                <Text style={styles.mainContentCardText}>
+                <Text style={[styles.mainContentCardText, globalStyles.medium]}>
                   {dataImage[id][data].description}
                 </Text>
               </View>
@@ -488,17 +495,17 @@ const MainContent = ({ id, selectedOption }: MainContentProps) => {
             <View>
               <View style={styles.mainContentCardContainer}>
                 <View style={styles.mainContentCard1}>
-                  <Text style={{ fontWeight: "500", fontSize: 15 }}>
+                  <Text style={[{ fontWeight: "500", fontSize: 16 }, globalStyles.medium]}>
                     外觀與尺寸
                   </Text>
                 </View>
                 <View style={styles.mainContentCardDeco}></View>
               </View>
               <View style={styles.mainContentCard2}>
-                <Text style={styles.mainContentCardText}>
+                <Text style={[styles.mainContentCardText, globalStyles.medium]}>
                   {dataImage[id][data].size}
                 </Text>
-                <Text style={styles.mainContentCardText}>
+                <Text style={[styles.mainContentCardText, globalStyles.medium]}>
                   {dataImage[id][data].appearance}
                 </Text>
               </View>
@@ -506,7 +513,7 @@ const MainContent = ({ id, selectedOption }: MainContentProps) => {
             <View>
               <View style={styles.mainContentCardContainer}>
                 <View style={styles.mainContentCard1}>
-                  <Text style={{ fontWeight: "500", fontSize: 15 }}>
+                  <Text style={[{ fontSize: 16 }, globalStyles.medium]}>
                     淨化空氣效果
                   </Text>
                 </View>
@@ -518,7 +525,7 @@ const MainContent = ({ id, selectedOption }: MainContentProps) => {
                   { marginBottom: viewportHeight / 20 },
                 ]}
               >
-                <Text style={styles.mainContentCardText}>
+                <Text style={[styles.mainContentCardText, globalStyles.medium]}>
                   {dataImage[id][data].purifyAir}
                 </Text>
               </View>
@@ -658,13 +665,13 @@ const ModalCard = ({
           </View>
         )}
         {!star && (
-          <Text style={[styles.modalCardText, larger && { fontSize: 17 }]}>
+          <Text style={[styles.modalCardText, larger && { fontSize: 18 }, globalStyles.medium]}>
             {content}
           </Text>
         )}
         <View style={{ flexDirection: "row" }}>
           <View style={styles.modalLabelContainer}>
-            <Text style={styles.modalLabelText}>{subtitle}</Text>
+            <Text style={[styles.modalLabelText, globalStyles.medium]}>{subtitle}</Text>
           </View>
           <View style={{ flex: 1 }}>
             <Text></Text>
@@ -796,7 +803,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     alignItems: "center",
   },
-  modal_option_text: { fontWeight: "600", fontSize: 10, letterSpacing: 0.5 },
+  modal_option_text: { fontWeight: "600", fontSize: 11, letterSpacing: 0.5 },
   decoration: {
     position: "relative",
     bottom: -52, // Adjust this value as needed to move the decoration
@@ -848,7 +855,7 @@ const styles = StyleSheet.create({
   },
   mainContentCardText: {
     fontWeight: "600",
-    fontSize: 11,
+    fontSize: 12,
     letterSpacing: 1,
     lineHeight: 20,
   },

@@ -1,13 +1,15 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
+import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
-import { useColorScheme, Dimensions, View, StyleSheet, Text } from "react-native";
+import {
+  useColorScheme,
+  Dimensions,
+  View,
+  StyleSheet,
+  Text,
+} from "react-native";
 import SplashComponent from "../components/splash/video";
 
 export {
@@ -26,6 +28,9 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    "GenYoGothicTW-H-01": require("../assets/fonts/GenYoGothicTW-H-01.ttf"),
+    "GenYoGothicTW-M-01": require("../assets/fonts/GenYoGothicTW-M-01.ttf"),
+    "GenYoGothicTW-R-01": require("../assets/fonts/GenYoGothicTW-R-01.ttf"),
     ...FontAwesome.font,
   });
 
@@ -58,12 +63,10 @@ function RootLayoutNav() {
   const scaleHeight = SCREEN_HEIGHT / BASE_WIDTH;
 
   return (
-      <SplashComponent>
-        {/* <View style={{flex: 1, transform: [{ scale: scaleWidth }]}} collapsable={false}> */}
-        {/* <View style={{flex: 1, aspectRatio: BASE_WIDTH/BASE_HEIGHT}} collapsable={false}> */}
-        <View style={{flex: 1}} collapsable={false}>
-
-          
+    <SplashComponent>
+      {/* <View style={{flex: 1, transform: [{ scale: scaleWidth }]}} collapsable={false}> */}
+      {/* <View style={{flex: 1, aspectRatio: BASE_WIDTH/BASE_HEIGHT}} collapsable={false}> */}
+      <View style={{ flex: 1 }} collapsable={false}>
         <ThemeProvider value={DefaultTheme}>
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -75,9 +78,9 @@ function RootLayoutNav() {
             />
             <Stack.Screen name="dairy" options={{ headerShown: false }} />
           </Stack>
-        </ThemeProvider></View>
-
-      </SplashComponent>
+        </ThemeProvider>
+      </View>
+    </SplashComponent>
   );
 }
 //bg r242 g241 b248
@@ -85,9 +88,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 0.5,
     transform: [{ scale: 1 }],
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff'
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
   },
   // Add styles for other components that might need individual scaling
 });

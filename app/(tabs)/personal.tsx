@@ -12,16 +12,23 @@ import {
 import { Text, View } from "../../components/Themed";
 import { useEffect, useState } from "react";
 
+import WeekViewCalendar from "../../components/dairy/WeekViewCalendar";
+
+import generateRandomData from "../../utils/generateRandomData";
+
+import globalStyles from "../../styles/styles";
+
 import { ImageUriPersonal } from "../../constants/ImageUri";
 import PointIcon from "../../assets/images/icon/point.svg";
 import DairyIcon from "../../assets/images/icon/dairy.svg";
 import MoreIcon from "../../assets/images/home/more.svg";
 import BackIcon from "../../assets/images/icon/back.svg";
-import Emoji1 from "../../assets/images/personal/emoji1.svg"
-import Emoji2 from "../../assets/images/personal/emoji2.svg"
-import Emoji3 from "../../assets/images/personal/emoji3.svg"
-import Emoji4 from "../../assets/images/personal/emoji4.svg"
-
+import Emoji1 from "../../assets/images/personal/emoji1.svg";
+import Emoji2 from "../../assets/images/personal/emoji2.svg";
+import Emoji3 from "../../assets/images/personal/emoji3.svg";
+import Emoji4 from "../../assets/images/personal/emoji4.svg";
+import DecoSVG from "../../assets/images/handbook/deco.svg";
+import ArrowSVG from "../../assets/images/personal/arrow.svg";
 
 import storeImage from "../../assets/images/personal/storeImage.png";
 import camera from "../../assets/images/personal/camera.png";
@@ -39,7 +46,9 @@ import demo1 from "../../assets/images/personal/demo1.png";
 import demo2 from "../../assets/images/personal/demo2.png";
 import demo3 from "../../assets/images/personal/demo3.png";
 import demo4 from "../../assets/images/personal/demo4.png";
+import option_deco2 from "../../assets/images/handbook/select_option.png";
 import { SvgProps } from "react-native-svg";
+import PostContent from "../../components/dairy/PostContent";
 
 const { width: viewportWidth, height: viewportHeight } =
   Dimensions.get("window");
@@ -47,8 +56,10 @@ const { width: viewportWidth, height: viewportHeight } =
 type PostData = {
   id: number;
   date: string;
+  time: string;
   uri: ImageSourcePropType;
   emoji: React.FC<SvgProps>;
+  title?: string;
   content: string;
 };
 
@@ -106,59 +117,30 @@ export default function Personal() {
   const [openPoint, setopenPoint] = useState(false);
   const [deleteModal, setDeletemodal] = useState(false);
   const [deleteData, setDeleteData] = useState(0);
-  const [data, setData] = useState<PostData[]>([]);
+  const [postDataList, setPostDataList] = useState<PostData[]>([]);
+  const [selectedDate, setSelectedDate] = useState<string>("");
 
   useEffect(() => {
-    setData([
-      {
-        id: 1,
-        date: "2023/11/06",
-        uri: demo1,
-        emoji: Emoji1,
-        content: "something content",
-      },
-      {
-        id: 2,
-        date: "2023/11/08",
-        uri: demo2,
-        emoji: Emoji2,
-        content: "something content",
-      },
-      {
-        id: 3,
-        date: "2023/11/09",
-        uri: demo3,
-        emoji: Emoji3,
-        content: "something content",
-      },
-      {
-        id: 4,
-        date: "2023/11/10",
-        uri: demo4,
-        emoji: Emoji4,
-        content: "something content",
-      },
-      {
-        id: 5,
-        date: "2023/12/06",
-        uri: demo1,
-        emoji: Emoji2,
-        content: "something content",
-      },
-      {
-        id: 5,
-        date: "2023/12/06",
-        uri: demo2,
-        emoji: Emoji1,
-        content: "something content",
-      },
-    ]);
+    const data = generateRandomData();
+    console.log("Post data:", data)
+    setPostDataList(data);
   }, []);
 
   const deletePost = (postId: number) => {
-    const newData = data.filter((item) => item.id !== postId);
-    setData(newData);
+    const newData = postDataList.filter((item) => item.id !== postId);
+    setPostDataList(newData);
   };
+
+  const getPostByDateString = (dateString: string | undefined): PostData | undefined => {
+    return postDataList.find(post => post.date === dateString);
+  };
+
+  useEffect(() => {
+    console.log("Selected date:", selectedDate);
+    console.log("Post data:", getPostByDateString(selectedDate));
+    // console.log("Post data 0420:", getPostByDateString("2024-4-20"));
+  }
+  , [selectedDate]);
 
   if (openDiary) {
     return (
@@ -166,14 +148,68 @@ export default function Personal() {
         style={{
           flex: 1,
           alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "rgb(0, 0, 0)",
+          justifyContent: "flex-start",
+          backgroundColor: "rgb(240, 248, 237)",
         }}
       >
-        <Text style={styles.title}>Diary</Text>
-        <Pressable onPress={() => setopenDiary(!openDiary)}>
-          <Text style={styles.title}>Go Back</Text>
-        </Pressable>
+        {/* banner of dairy */}
+        <View
+          style={{
+            zIndex: 1,
+            height: viewportHeight * 0.3,
+            width: viewportWidth,
+            backgroundColor: "rgb(255, 255, 255)",
+            alignItems: "flex-start",
+            justifyContent: "flex-start",
+          }}
+        >
+          <View
+            style={{
+              width: "100%",
+              marginTop: viewportHeight * 0.08,
+              marginLeft: viewportWidth * 0.08,
+            }}
+          >
+            <Pressable onPress={() => setopenDiary(!openDiary)}>
+              <BackIcon
+                fill={"rgb(0, 0, 0)"}
+                style={{ width: 25, height: 25 }}
+              />
+            </Pressable>
+          </View>
+          <View style={{ marginTop: viewportHeight * 0.035, width: "100%" }}>
+            <WeekViewCalendar
+              selectedDate={selectedDate}
+              onDateSelected={setSelectedDate}
+            />
+          </View>
+          <View
+            style={{
+              position: "relative",
+              top: "-12.6%",
+              // right: "30%",
+              backgroundColor: "rgba(0, 0, 0, 0)",
+            }}
+          >
+            <DecoSVG
+              width={viewportWidth / 3}
+              height={70}
+              fill="rgb(255, 255, 255)"
+            />
+            <ArrowSVG
+              width={viewportWidth / 15}
+              height={70}
+              fill="rgb(148, 172, 142)"
+              style={{
+                position: "absolute",
+                left: (viewportWidth * 4) / 30,
+                top: 10,
+                transform: [{ rotate: "180deg" }],
+              }}
+            />
+          </View>
+        </View>
+        <PostContent postData={getPostByDateString(selectedDate)} empty={getPostByDateString(selectedDate) ? false : true} />
       </View>
     );
   }
@@ -264,7 +300,11 @@ export default function Personal() {
               />
             </View>
             <View style={styles.storeModalHeader2}>
-              <Text style={{ fontSize: 20, fontWeight: "500",letterSpacing: 5 }}>兌換獎勵</Text>
+              <Text
+                style={{ fontSize: 20, fontWeight: "500", letterSpacing: 5 }}
+              >
+                兌換獎勵
+              </Text>
             </View>
             <View style={styles.storeModalListView}>
               <ScrollView>
@@ -349,10 +389,9 @@ export default function Personal() {
               }}
             />
           </View>
-          <TouchableOpacity
-            onPress={() => setopenDiary(!openDiary)}
-          >
-            <View style={{
+          <TouchableOpacity onPress={() => setopenDiary(!openDiary)}>
+            <View
+              style={{
                 width: 85,
                 height: 120,
                 marginLeft: 25,
@@ -367,17 +406,24 @@ export default function Personal() {
                 shadowOpacity: 0.25, // Shadow opacity
                 shadowRadius: 2, // Shadow blur radius
                 elevation: 5, // Elevation for Android
-              }}>
-
-            <DairyIcon fill={"rgba(0, 0, 0, 0.8)"} style={{ width: 40, height: 40 }} />
-            <Text style={{ fontSize: 12, color: "rgba(0, 0, 0, 0.8)", marginTop: 9 }}>
-              植物日誌
-            </Text>
+              }}
+            >
+              <DairyIcon
+                fill={"rgba(0, 0, 0, 0.8)"}
+                style={{ width: 40, height: 40 }}
+              />
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: "rgba(0, 0, 0, 0.8)",
+                  marginTop: 9,
+                }}
+              >
+                植物日誌
+              </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => setopenPoint(!openPoint)}
-          >
+          <TouchableOpacity onPress={() => setopenPoint(!openPoint)}>
             <View
               style={{
                 width: 85,
@@ -410,8 +456,8 @@ export default function Personal() {
         <View style={{ height: viewportHeight * 0.9 - 300 }}>
           <ScrollView>
             <View style={styles.dairyBody}>
-              {data.map((value, i) => {
-                const Emoji = value.emoji
+              {postDataList.map((value, i) => {
+                const Emoji = value.emoji;
                 return (
                   <View key={i}>
                     <TouchableOpacity
@@ -427,17 +473,19 @@ export default function Personal() {
                           width: (viewportWidth - 72) / 2,
                           height: (viewportWidth - 72) / 2,
                           margin: 12,
-                          borderRadius: 25
+                          borderRadius: 25,
                         }}
                       />
                     </TouchableOpacity>
-                    <Emoji style={{
+                    <Emoji
+                      style={{
                         width: 50,
                         height: 50,
                         position: "absolute",
                         top: 0,
                         left: -55,
-                      }}/>
+                      }}
+                    />
                     <TouchableOpacity
                       style={{ position: "absolute", top: 18, right: 24 }}
                       onPress={() => {
@@ -562,7 +610,7 @@ const styles = StyleSheet.create({
   },
   storeModalListView: {
     paddingTop: 10,
-    paddingBottom: 20, 
+    paddingBottom: 20,
     backgroundColor: "rgb(240, 248, 237)",
     height: viewportHeight * 0.72 - 170,
   },

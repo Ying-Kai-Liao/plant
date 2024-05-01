@@ -43,6 +43,7 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
+    <View style={{backgroundColor: "transparent", flex: 1}}>
     <Tabs
       initialRouteName="index"
       screenOptions={{
@@ -113,6 +114,7 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+    </View>
   );
 }
 

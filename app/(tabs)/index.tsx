@@ -14,6 +14,8 @@ import { Text, View } from "../../components/Themed";
 import PlantButton from "../../components/ui_home/PlantButton";
 import CustomCarousel from "../../components/ui/CharacterCarousel";
 
+import globalStyles from "../../styles/styles" 
+
 import BackIcon from "../../assets/images/icon/back.svg";
 import MoreIcon from "../../assets/images/home/more.svg";
 import WaterIcon from "../../assets/images/icon/water.svg";
@@ -248,25 +250,25 @@ export default function Home() {
               }}
             >
               <Text
-                style={{
+                style={[{
                   position: "absolute",
                   top: 90,
                   fontSize: 20,
                   fontWeight: "500",
                   left: viewportWidth * 0.05 + 45,
-                }}
+                }, globalStyles.medium]}
               >
                 {detailData.name}
               </Text>
               <Text
-                style={{
+                style={[{
                   position: "absolute",
                   fontSize: 15,
                   fontWeight: "400",
                   color: "#4d4d4d",
                   top: 118,
                   left: viewportWidth * 0.05 + 45,
-                }}
+                }, globalStyles.regular]}
               >
                 {plantType[detailData.type as keyof typeof plantType] as string}
               </Text>
@@ -360,7 +362,7 @@ export default function Home() {
                 justifyContent: "center",
               }}
             >
-              <Text style={styles.title}>我的植物</Text>
+              <Text style={[styles.title, globalStyles.regular]}>我的植物</Text>
               <TouchableOpacity
                 style={styles.moreButton}
                 onPress={() => setTool(!tool)}
@@ -371,24 +373,24 @@ export default function Home() {
                 <View style={styles.toolBox}>
                   <TouchableOpacity>
                     <Text
-                      style={{
+                      style={[{
                         fontSize: 11,
                         fontWeight: "600",
                         color: "#000000",
                         margin: 5,
-                      }}
+                      }, globalStyles.medium]}
                     >
                       編輯
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity>
                     <Text
-                      style={{
+                      style={[{
                         fontSize: 11,
                         fontWeight: "600",
                         color: "#000000",
                         margin: 5,
-                      }}
+                      }, globalStyles.medium]}
                     >
                       取消
                     </Text>
@@ -410,7 +412,7 @@ export default function Home() {
                     }}
                   >
                     <View style={styles.itemBox}>
-                      <Text style={{ fontSize: 12, marginBottom: 5 }}>
+                      <Text style={[{ fontSize: 12, marginBottom: 5 }, globalStyles.regular]}>
                         {value.date}
                       </Text>
                       <Image
@@ -421,7 +423,7 @@ export default function Home() {
                           height: (viewportWidth * 80) / 393,
                         }}
                       />
-                      <Text style={{ fontSize: 12, marginTop: 5 }}>
+                      <Text style={[{ fontSize: 12, marginTop: 5 }, globalStyles.regular]}>
                         {value.name}
                       </Text>
                     </View>
@@ -461,7 +463,7 @@ export default function Home() {
               backgroundColor: "rgb(240, 248, 237)"
             }}
           >
-            <Text style={{ fontSize: 18 }}>選擇你專屬的小精靈</Text>
+            <Text style={[{ fontSize: 18 }, globalStyles.regular]}>選擇你專屬的小精靈</Text>
           </View>
           <CustomCarousel onSlideChange={onSlideChange} />
 
@@ -471,7 +473,7 @@ export default function Home() {
                 setChooseCharacter(false);
               }}
             >
-              <Text style={{ fontSize: 18, fontWeight: "600" }}>就是你了!</Text>
+              <Text style={[{ fontSize: 18 }, globalStyles.medium]}>就是你了!</Text>
             </Pressable>
           </View>
         </View>

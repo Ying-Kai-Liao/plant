@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "rgb(90, 195, 217)", // Use the appropriate background color
     paddingHorizontal: 28, // Horizontal padding
-    paddingVertical: 10, // Vertical padding
+    paddingVertical: 12, // Vertical padding
     borderRadius: 30, // Adjust the border radius to match your design
     alignItems: "center", // Center the text inside the button
     justifyContent: "center", // Center the text inside the button
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     fontWeight: "400", // Font weight
     fontSize: 20, // Font size
     letterSpacing: 1, // Adjust the letter spacing
+    fontFamily: 'GenYoGothicTW-R-01',
   },
 });
 

@@ -12,6 +12,8 @@ import {
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import Lottie, { AnimationObject } from "lottie-react-native";
 
+import globalStyles from "../../styles/styles"
+
 import classroom_png from "../../assets/images/bg3.png";
 import bedroom_png from "../../assets/images/bg2.png";
 import livingroom_png from "../../assets/images/bg1.png";
@@ -141,10 +143,10 @@ const CustomCarousel: React.FC<CustomCarouselProps> = React.memo(
             marginBottom: -30
           }}
         >
-          <Text style={{ fontSize: 28, fontWeight: "600" }}>
+          <Text style={[{ fontSize: 28 }, globalStyles.medium]}>
             {carouselItems[activeSlide].title}
           </Text>
-          <Text style={{ fontSize: 18, color: "#4d4d4d", marginTop: 10 }}>
+          <Text style={[{ fontSize: 19, color: "#4d4d4d", marginTop: 10 }, globalStyles.regular]}>
             {carouselItems[activeSlide].name}
           </Text>
         </View>
@@ -164,12 +166,12 @@ const CustomCarousel: React.FC<CustomCarouselProps> = React.memo(
           inactiveSlideScale={0.8}
         />
         <View style={{ marginVertical: 10, backgroundColor: "transparent" }}>
-          <Text style={{ fontWeight: "700", textAlign: 'center', lineHeight: 22 }}>
+          <Text style={[{ fontSize: 14, textAlign: 'center', lineHeight: 22, letterSpacing: 1.5 }, globalStyles.header]}>
             {carouselItems[activeSlide].content1}
           </Text>
         </View>
         <View style={{ marginVertical: 10, backgroundColor: "transparent", marginBottom: 30 }}>
-          <Text style={{ fontWeight: "400" , textAlign: 'center', lineHeight: 25}}>
+          <Text style={[{ fontWeight: "400" , textAlign: 'center', lineHeight: 25}, globalStyles.regular]}>
             {carouselItems[activeSlide].content2}
           </Text>
         </View>
