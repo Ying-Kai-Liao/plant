@@ -8,11 +8,14 @@ import {
   Pressable,
   ImageSourcePropType,
 } from "react-native";
+import { SvgProps } from "react-native-svg";
+
+import { useEffect, useState } from "react";
+import { useUserContext } from "../../providers/UserProvider";
 
 import { Text, View } from "../../components/Themed";
-import { useEffect, useState } from "react";
-
 import WeekViewCalendar from "../../components/dairy/WeekViewCalendar";
+import PostContent from "../../components/dairy/PostContent";
 
 import generateRandomData from "../../utils/generateRandomData";
 
@@ -47,8 +50,7 @@ import demo2 from "../../assets/images/personal/demo2.png";
 import demo3 from "../../assets/images/personal/demo3.png";
 import demo4 from "../../assets/images/personal/demo4.png";
 import option_deco2 from "../../assets/images/handbook/select_option.png";
-import { SvgProps } from "react-native-svg";
-import PostContent from "../../components/dairy/PostContent";
+import earnPointClose from "../../assets/images/personal/earnPointClose.png";
 
 const { width: viewportWidth, height: viewportHeight } =
   Dimensions.get("window");
@@ -115,14 +117,16 @@ const storeData: StoreData[] = [
 export default function Personal() {
   const [openDiary, setopenDiary] = useState(false);
   const [openPoint, setopenPoint] = useState(false);
+  const [openTrade, setOpenTrade] = useState(false);
   const [deleteModal, setDeletemodal] = useState(false);
   const [deleteData, setDeleteData] = useState(0);
   const [postDataList, setPostDataList] = useState<PostData[]>([]);
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const { point, setPoint } = useUserContext();
 
   useEffect(() => {
     const data = generateRandomData();
-    console.log("Post data:", data)
+    console.log("Post data:", data);
     setPostDataList(data);
   }, []);
 
@@ -131,16 +135,23 @@ export default function Personal() {
     setPostDataList(newData);
   };
 
-  const getPostByDateString = (dateString: string | undefined): PostData | undefined => {
-    return postDataList.find(post => post.date === dateString);
+  const getPostByDateString = (
+    dateString: string | undefined
+  ): PostData | undefined => {
+    return postDataList.find((post) => post.date === dateString);
+  };
+
+  const handleTrade = (consumed: number) => {
+    setOpenTrade(true);
+    console.log('consumed:', consumed)
+    setPoint(point-consumed);
   };
 
   useEffect(() => {
     console.log("Selected date:", selectedDate);
     console.log("Post data:", getPostByDateString(selectedDate));
     // console.log("Post data 0420:", getPostByDateString("2024-4-20"));
-  }
-  , [selectedDate]);
+  }, [selectedDate]);
 
   if (openDiary) {
     return (
@@ -209,7 +220,10 @@ export default function Personal() {
             />
           </View>
         </View>
-        <PostContent postData={getPostByDateString(selectedDate)} empty={getPostByDateString(selectedDate) ? false : true} />
+        <PostContent
+          postData={getPostByDateString(selectedDate)}
+          empty={getPostByDateString(selectedDate) ? false : true}
+        />
       </View>
     );
   }
@@ -284,7 +298,7 @@ export default function Personal() {
                 <Text
                   style={{ marginLeft: 10, fontSize: 30, fontWeight: "600" }}
                 >
-                  40
+                  {point}
                 </Text>
               </View>
               <Image
@@ -309,7 +323,88 @@ export default function Personal() {
             <View style={styles.storeModalListView}>
               <ScrollView>
                 {storeData.map((data, i) => (
-                  <View key={i} style={styles.storeModalListItem}>
+                  <Pressable
+                    key={i}
+                    onPress={() => {
+                      handleTrade(data.price)
+                    }}
+                    style={[styles.storeModalListItem]}
+                  >
+                    {/* Modal for trade */}
+                    <Modal
+                      presentationStyle="overFullScreen"
+                      animationType="slide"
+                      transparent
+                      visible={openTrade}
+                    >
+                      <View
+                        style={{
+                          flex: 1,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          backgroundColor: "rgba(0, 0, 0, 0.6)",
+                        }}
+                      >
+                        <Image
+                          source={data.uri}
+                          resizeMode="contain"
+                          style={{
+                            width: viewportWidth * 0.4,
+                            height: viewportHeight * 0.4,
+                            marginBottom: 20,
+                          }}
+                        />
+                        <Text
+                          style={[
+                            {
+                              color: "white",
+                              fontSize: 25,
+                              letterSpacing: 3,
+                              marginTop: -viewportHeight * 0.12,
+                            },
+                            globalStyles.medium,
+                          ]}
+                        >
+                          恭喜獲得禮品一份
+                        </Text>
+                        <View
+                          style={{
+                            backgroundColor: "white",
+                            paddingVertical: 10,
+                            paddingHorizontal: 35,
+                            marginTop: 20,
+                            marginBottom: viewportHeight * 0.1,
+                            borderRadius: 15,
+                          }}
+                        >
+                          <Text
+                            style={[
+                              { fontSize: 20, letterSpacing: 3 },
+                              globalStyles.medium,
+                            ]}
+                          >
+                            成功兌換!
+                          </Text>
+                        </View>
+                        <Pressable
+                          onPress={() => setOpenTrade(false)}
+                          style={{
+                            position: "absolute",
+                            right: viewportWidth * 0.1,
+                            bottom: "50%",
+                          }}
+                        >
+                          <Image
+                            source={earnPointClose}
+                            resizeMode="contain"
+                            style={{
+                              width: viewportWidth * 0.17,
+                              height: viewportHeight * 0.17,
+                            }}
+                          />
+                        </Pressable>
+                      </View>
+                    </Modal>
                     <Image
                       source={data.uri}
                       resizeMode="contain"
@@ -349,7 +444,18 @@ export default function Personal() {
                         </Text>
                       </View>
                     </View>
-                  </View>
+                    {data.price > point && (
+                      <View
+                        style={{
+                          position: "absolute",
+                          backgroundColor: "rgba(0, 0, 0, 0.3)",
+                          width: "100%",
+                          height: "100%",
+                          borderRadius: 20,
+                        }}
+                      ></View>
+                    )}
+                  </Pressable>
                 ))}
               </ScrollView>
             </View>
@@ -619,6 +725,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     flexDirection: "row",
     width: viewportWidth - 24,
+    backgroundColor: "rgb(255, 255, 255)",
     padding: 0,
     margin: 12,
     borderRadius: 20,

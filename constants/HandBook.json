@@ -1,6 +1,7 @@
 [
   {
     "name": "心葉蔓綠絨",
+    "plantId": 4,
     "latinName": "Philodendron hederaceum",
     "family": "天南星科",
     "type": "觀葉植物",
@@ -29,6 +30,7 @@
   },
   {
     "name": "黃金虎尾蘭",
+    "plantId": 13,
     "latinName": "Dracaena trifasciata",
     "family": "天南星科",
     "type": "觀葉植物",
@@ -57,6 +59,7 @@
   },
   {
     "name": "佛手虎尾蘭",
+    "plantId": 1,
     "latinName": "Sansevieria cylindrica var. patula 'Boncel'",
     "family": "龍舌蘭科",
     "type": "觀葉植物",
@@ -85,6 +88,7 @@
   },
   {
     "name": "橡皮樹",
+    "plantId": 5,
     "latinName": "Hevea brasiliensis",
     "family": "大戟科橡膠樹屬",
     "type": "常綠大喬木",
@@ -113,6 +117,7 @@
   },
   {
     "name": "蘆薈",
+    "plantId": 8,
     "latinName": "Aloe vera",
     "family": "蘆薈科",
     "type": "多肉植物",
@@ -139,6 +144,4 @@
       "others": "葉片因含水量高達99.5%\n對低溫非常敏感"
     }
   }
-  
-  
 ]

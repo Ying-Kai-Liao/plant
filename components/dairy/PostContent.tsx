@@ -11,6 +11,7 @@ import {
   Modal,
 } from "react-native";
 import { SvgProps } from "react-native-svg";
+import { useUserContext } from "../../providers/UserProvider";
 
 import globalStyles from "../../styles/styles";
 
@@ -50,10 +51,12 @@ const PostContent: React.FC<PostContentProps> = ({ postData, empty }) => {
   const imageSource =
     postData?.uri || require("../../assets/images/personal/demo1.png");
   const Emoji = postData?.emoji || (() => <></>);
+  const {point,setPoint} = useUserContext()
 
   const shareModalOnPress = () => {
     setOpenShare(false);
     setOpenEarnPoints(true);
+    setPoint(point + 1);
   };
 
   if (empty) {

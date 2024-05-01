@@ -13,7 +13,9 @@ import { ImageProps, SvgProps } from "react-native-svg";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Svg, { G, Path } from "react-native-svg";
 
-import globalStyles from "../../styles/styles"
+import { PlantData, useUserContext } from "../../providers/UserProvider";
+
+import globalStyles from "../../styles/styles";
 
 import EditScreenInfo from "../../components/EditScreenInfo";
 import { Text, View } from "../../components/Themed";
@@ -105,13 +107,16 @@ export default function HandBook() {
       <View style={styles.head_container}>
         <Image source={hb_main} resizeMode="contain" style={{ width: "70%" }} />
         <Text
-          style={[{
-            position: "relative",
-            color: "white",
-            top: -80,
-            fontSize: 25,
-            fontWeight: "600",
-          }, globalStyles.regular]}
+          style={[
+            {
+              position: "relative",
+              color: "white",
+              top: -80,
+              fontSize: 25,
+              fontWeight: "600",
+            },
+            globalStyles.regular,
+          ]}
         >
           植物圖鑑
         </Text>
@@ -151,7 +156,10 @@ const SearchBox = () => {
   return (
     <View style={styles.searchBoxContainer}>
       <TextInput
-        style={[(clicked ? styles.input_clicked : styles.input_unclicked), globalStyles.regular]}
+        style={[
+          clicked ? styles.input_clicked : styles.input_unclicked,
+          globalStyles.regular,
+        ]}
         placeholder="🔍搜尋植物"
         placeholderTextColor="#fff"
         value={searchQuery}
@@ -166,7 +174,9 @@ const SearchBox = () => {
       />
       {clicked && (
         <View style={[styles.dropdown]}>
-          <Text style={[{ color: "white" }, globalStyles.regular]}>dropdown</Text>
+          <Text style={[{ color: "white" }, globalStyles.regular]}>
+            dropdown
+          </Text>
         </View>
       )}
     </View>
@@ -187,12 +197,15 @@ const Card: React.FC<CardProps> = ({ uri, name, id, onPress }) => {
         {uri && <Image source={uri} resizeMode="contain" style={{ flex: 1 }} />}
         {name && (
           <Text
-            style={[{
-              marginTop: 8,
-              fontWeight: "600",
-              fontSize: 13,
-              color: "rgb(98, 89, 82)",
-            }, globalStyles.medium]}
+            style={[
+              {
+                marginTop: 8,
+                fontWeight: "600",
+                fontSize: 13,
+                color: "rgb(98, 89, 82)",
+              },
+              globalStyles.medium,
+            ]}
           >
             {name}
           </Text>
@@ -211,11 +224,33 @@ interface InfoModalProps {
 const InfoModal: React.FC<InfoModalProps> = ({ id, visible, setVisible }) => {
   const options = ["基本資訊", "照護方式", "生長條件"];
   const [selectedOption, setSelectedOption] = useState(options[0]);
+  const { plants, setPlants } = useUserContext();
+
+  const today = new Date();
+  const year = today.getFullYear(); // Gets the current year
+  const month = today.getMonth() + 1; // Gets the month (0-indexed, so add 1)
+  const day = today.getDate(); // Gets the day of the month
+
+  const formattedDate = `${year}/${month.toString().padStart(2, "0")}/${day
+    .toString()
+    .padStart(2, "0")}`;
+
   const closeModal = () => {
     setVisible(false);
   };
   const optionPress = (id: number) => {
     setSelectedOption(options[id]);
+  };
+  const handleAddPlant = (id: number) => {
+    const newPlant: PlantData = {
+      type: dataImage[id].plantId,
+      date: formattedDate,
+      name: dataImage[id].name,
+      waterReminder: false,
+      fertilizeReminder: false,
+    };
+    setPlants([...plants, newPlant]);
+    closeModal()
   };
 
   return (
@@ -251,14 +286,17 @@ const InfoModal: React.FC<InfoModalProps> = ({ id, visible, setVisible }) => {
           </View>
           {/* still need modify here */}
           <TouchableOpacity
-            onPress={closeModal}
+            onPress={() => handleAddPlant(id)}
             style={{ backgroundColor: "white", padding: 8, borderRadius: 20 }}
           >
             <Text
-              style={[{
-                fontWeight: "500",
-                letterSpacing: 2,
-              }, globalStyles.medium]}
+              style={[
+                {
+                  fontWeight: "500",
+                  letterSpacing: 2,
+                },
+                globalStyles.medium,
+              ]}
             >
               ・ 加入我的植物{" "}
             </Text>
@@ -280,7 +318,12 @@ const InfoModal: React.FC<InfoModalProps> = ({ id, visible, setVisible }) => {
             style={[
               styles.modal_textStyle1,
               globalStyles.regular,
-              { fontWeight: "300", fontSize: 10, marginBottom: 13, marginTop: 2 },
+              {
+                fontWeight: "300",
+                fontSize: 10,
+                marginBottom: 13,
+                marginTop: 2,
+              },
             ]}
           >
             {dataImage[id].latinName}
@@ -422,7 +465,13 @@ const Option = ({
             resizeMode="contain"
             style={{ width: 50, height: 50 }}
           />
-          <Text style={[styles.modal_textStyle1, styles.modal_option_text, globalStyles.medium]}>
+          <Text
+            style={[
+              styles.modal_textStyle1,
+              styles.modal_option_text,
+              globalStyles.medium,
+            ]}
+          >
             {label}
           </Text>
         </View>
@@ -483,7 +532,10 @@ const MainContent = ({ id, selectedOption }: MainContentProps) => {
             >
               <View style={{ width: "80%" }}>
                 <Text
-                  style={[{ fontWeight: "500", fontSize: 16, paddingBottom: 5 }, globalStyles.medium]}
+                  style={[
+                    { fontWeight: "500", fontSize: 16, paddingBottom: 5 },
+                    globalStyles.medium,
+                  ]}
                 >
                   特色
                 </Text>
@@ -495,7 +547,12 @@ const MainContent = ({ id, selectedOption }: MainContentProps) => {
             <View>
               <View style={styles.mainContentCardContainer}>
                 <View style={styles.mainContentCard1}>
-                  <Text style={[{ fontWeight: "500", fontSize: 16 }, globalStyles.medium]}>
+                  <Text
+                    style={[
+                      { fontWeight: "500", fontSize: 16 },
+                      globalStyles.medium,
+                    ]}
+                  >
                     外觀與尺寸
                   </Text>
                 </View>
@@ -665,13 +722,21 @@ const ModalCard = ({
           </View>
         )}
         {!star && (
-          <Text style={[styles.modalCardText, larger && { fontSize: 18 }, globalStyles.medium]}>
+          <Text
+            style={[
+              styles.modalCardText,
+              larger && { fontSize: 18 },
+              globalStyles.medium,
+            ]}
+          >
             {content}
           </Text>
         )}
         <View style={{ flexDirection: "row" }}>
           <View style={styles.modalLabelContainer}>
-            <Text style={[styles.modalLabelText, globalStyles.medium]}>{subtitle}</Text>
+            <Text style={[styles.modalLabelText, globalStyles.medium]}>
+              {subtitle}
+            </Text>
           </View>
           <View style={{ flex: 1 }}>
             <Text></Text>

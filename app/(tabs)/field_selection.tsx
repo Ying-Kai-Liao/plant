@@ -2,7 +2,6 @@ import { Dimensions, StyleSheet } from 'react-native';
 import { ImageBackground } from 'react-native';
 import Lottie, { AnimationObject } from "lottie-react-native";
 
-import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 import StartButton from '../../components/ui/StartButton';
 

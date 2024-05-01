@@ -10,6 +10,9 @@ import { ImageBackground, Image, Switch } from "react-native";
 import { useEffect, useState } from "react";
 import Lottie, { AnimationObject } from "lottie-react-native";
 
+import { PlantData } from "../../providers/UserProvider";
+import { useUserContext } from "../../providers/UserProvider";
+
 import { Text, View } from "../../components/Themed";
 import PlantButton from "../../components/ui_home/PlantButton";
 import CustomCarousel from "../../components/ui/CharacterCarousel";
@@ -74,12 +77,6 @@ import watered5 from "../../assets/lotties/characters/5/watered.json";
 const { width: viewportWidth, height: viewportHeight } =
   Dimensions.get("window");
 
-type PlantData = {
-  type: number;
-  date: string;
-  name: string;
-};
-
 type LottieAnimation = {
   [key: string]: any; // A generic object to represent the Lottie JSON
 };
@@ -96,16 +93,16 @@ type LottieExpressions = {
 export default function Home() {
   const [chooseCharacter, setChooseCharacter] = useState<boolean>();
   const [openMyPlant, setOpenMyPlant] = useState(false);
-  const [detailData, setDetailData] = useState<Plant>(); // detail page data
+  const [detailData, setDetailData] = useState<PlantData>(); // detail page data
   const [detailView, setDetailView] = useState(false); // detail page open
   const [tool, setTool] = useState(false);
-  const [data, setData] = useState<Plant[]>([]); // data format still need modify
   const [isEnabled, setIsEnabled] = useState(false);
   const [character, setCharacter] = useState(0);
   const [currentExpression, setCurrentExpression] = useState("");
   const [trigger, setTrigger] = useState(false);
   const [lottie, setLottie] = useState<LottieAnimation>();
   const [lotties, setLotties] = useState<LottieExpressions>();
+  const { plants, setPlants } = useUserContext()
 
   const onSlideChange = (location: string, index: number) => {
     console.log(index)
@@ -209,14 +206,6 @@ export default function Home() {
   // }, []);
 
   useEffect(() => {
-    // get user data
-
-    setData([
-      { type: 1, date: "2023/11/02", name: "欣欣", isWater: true, isFertilize: true },
-      { type: 4, date: "2023/11/03", name: "綠綠", isWater: false, isFertilize: true  },
-      { type: 3, date: "2023/11/04", name: "花花", isWater: true, isFertilize: false  },
-    ]);
-
     setChooseCharacter(true);
   }, []);
 
@@ -371,7 +360,7 @@ export default function Home() {
               </TouchableOpacity>
               {tool && (
                 <View style={styles.toolBox}>
-                  <TouchableOpacity>
+                  <TouchableOpacity >
                     <Text
                       style={[{
                         fontSize: 11,
@@ -400,14 +389,14 @@ export default function Home() {
             </View>
             {/* Body */}
             <View style={styles.selection_box_body}>
-              {data.map((value, i) => {
+              {plants.map((value, i) => {
                 const uri =
                   plantImage[value.type as keyof typeof plantImage]; // type assertions
                 return (
                   <TouchableOpacity
                     key={i}
                     onPress={() => {
-                      setDetailData(data[i]);
+                      setDetailData(plants[i]);
                       setDetailView(true);
                     }}
                   >
